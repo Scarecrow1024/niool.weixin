@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>空教室查询</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <script type="text/javascript">
+    //禁止显示连接
+    function onBridgeReady(){
+     WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }
+</script>
+  <style type="text/css">
+    .col-md-12{
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+    .col-lg-12{
+        margin-top: 10px;
+        background: #eee;
+        border-radius: 5px;
+    }
+    footer{background-color:#F5DEB3;color:#666;position: fixed;bottom: 0px;width: 100%;padding: 10px;text-align: center;}
+  </style>
+<body>
+    <div class="container">
+    <div class="col-md-12">
+      <p class=""><h3 style="color: #AB82FF;text-align:center">空教室查询<h3></p>
+    </div>
+    <hr>
+        <form method="post" action="{:U('eclass')}">
+            <div class="form-group">
+            <select name="zhou" class="form-control">
+                <option value="0"  selected>请选择周次</option>
+                <option value="1%" >第一周</option>
+                <option value="_1%" >第二周</option>
+                <option value="__1%" >第三周</option>
+                <option value="___1%" >第四周</option>
+                <option value="____1%" >第五周</option>
+                <option value="_____1%" >第六周</option>
+                <option value="______1%" >第七周</option>
+                <option value="_______1%">第八周</option>
+                <option value="________1%">第九周</option>
+                <option value="_________1%" >第十周</option>
+                <option value="__________1%" >第十一周</option>
+                <option value="___________1%" >第十二周</option>
+                <option value="____________1%" >第十三周</option>
+                <option value="_____________1%" >第十四周</option>
+                <option value="______________1%" >第十五周</option>
+                <option value="_______________1%" >第十六周</option>
+                <option value="________________1%" >第十七周</option>
+                <option value="_________________1%" >第十八周</option>
+                <option value="__________________1%" >第十九周</option>
+                <option value="___________________1%" >第二十周</option>
+                <option value="____________________1%" >第二十一周</option>
+                <option value="_____________________1%" >第二十二周</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <select name="xingqi" class="form-control">
+                <option value="0" selected="selected">请选择星期</option>
+                <option value="1" >星期一</option>
+                <option value="2" >星期二</option>
+                <option value="3" >星期三</option>
+                <option value="4" >星期四</option>
+                <option value="5" >星期五</option>
+                <option value="6" >星期六</option>
+                <option value="7" >星期日</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <select name="jie" class="form-control">
+                <option value="0" selected="selected">请选择节次</option>
+                <option value="1">第一节</option>
+                <option value="2">第二节</option>
+                <option value="3">第三节</option>
+                <option value="4">第四节</option>
+                <option value="5">第五节</option>
+            </select>
+            </div>
+            <div class="form-group">
+            <select name="jxlm" class="form-control">
+                <option value="0" selected="selected">请选择教学楼</option>
+                <option value="1号教学楼">1号教学楼</option>
+                <option value="2号教学楼">2号教学楼</option>
+                <option value="3号教学楼">3号教学楼</option>
+                <option value="电气综合楼">电气综合楼</option>
+                <option value="理化综合楼">理化综合楼</option>
+                <option value="机械综合楼">机械综合楼</option>
+                <option value="能源综合楼">能源综合楼</option>
+                <option value="资环综合楼">资环综合楼</option>
+                <option value="测绘综合楼">测绘综合楼</option>
+                <option value="土木综合楼">土木综合楼</option>
+                <option value="计算机综合楼">计算机综合楼</option>
+                <option value="文科综合楼">文科综合楼</option>
+                <option value="经管综合楼">经管综合楼</option>
+                <option value="材料综合楼">材料综合楼</option>
+            </select>
+            </div>
+            <div class="form-group">
+              <button type="submit" name="submit" class="btn btn-block btn-info btn-lg"><strong>查询空教室</strong></button>
+            </div>
+        </form>
+    </div>
+</body>
+<footer style="text-align: center;">
+    &copy;HPU小微提供<br>
+</footer>
+</html>

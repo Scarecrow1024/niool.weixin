@@ -1,0 +1,19 @@
+<?php 
+	include('./qqConnectAPI.php');
+	//echo $_GET['code']
+	//获取access_token
+	$oauth=new Oauth();
+	$access_token=$oauth->qq_callback();
+	//echo $access_token."<br>";
+	//获取用户的唯一标示openid
+	$openid=$oauth->get_openid();
+	//echo $openid;
+	$qc=new QC($access_token,$openid);
+	$info=$qc->get_user_info();
+	//print_r($info);
+
+	setcookie('access_token',$access_token,time()+3600);
+	setcookie('openid',$openid,time()+3600);
+	$url="http://niool.com/weixin/index.php?s=/addon/QQBind/QQBind/login.html";
+	header("location:$url");
+?>

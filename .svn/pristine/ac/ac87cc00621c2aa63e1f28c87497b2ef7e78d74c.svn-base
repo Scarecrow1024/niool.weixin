@@ -1,0 +1,65 @@
+<?php
+
+namespace Addons\Repair\Model;
+
+use Home\Model\WeixinModel;
+
+/**
+ * Repair的微信模型
+ */
+class WeixinAddonModel extends WeixinModel {
+	function reply() { 
+		$openid=get_openid();
+        $user=M('user');
+        //判断是否绑定
+        $studentid=$user->where("openid=".'"'.$openid.'"')->getField('studentid');
+		if($studentid==0){
+	        $openid=get_openid();
+	        $url=addons_url ('Binding://Binding/login?openid='.$openid);
+	        $dataArr[0]=array(
+	                'Title' => '绑定',
+	                'Description' => '点击图片完成账号绑定',
+	                'PicUrl' => 'http://www.pp3.cn/uploads/allimg/120129/1-120129232444.jpg',
+	                'Url' => $url
+	            );
+	        $dataArr[1]=array(
+	                'Title' => '你还未绑定账号点击图片完成认证',	                
+	            );
+			$this->replyNews($dataArr);
+        }else{
+			$url=addons_url ("Repair://Repair/index?openid=".get_openid());
+			$dataArr[0]=array(
+	                'Title' => '嗖HPU在线报修',
+	                'PicUrl' => 'http://www.sanjinty.com/uploads/150414/2-150414110Ha37.jpg',
+	                'Url' => $url
+	            );    
+	        $this->replyNews($dataArr);
+	    }
+	}
+	
+	// 关注公众号事件
+	public function subscribe() {
+		return true;
+	}
+	
+	// 取消关注公众号事件
+	public function unsubscribe() {
+		return true;
+	}
+	
+	// 扫描带参数二维码事件
+	public function scan() {
+		return true;
+	}
+	
+	// 上报地理位置事件
+	public function location() {
+		return true;
+	}
+	
+	// 自定义菜单事件
+	public function click() {
+		return true;
+	}
+}
+        	

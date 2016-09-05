@@ -1,0 +1,13 @@
+<?php
+
+namespace Addons\Wecome\Controller;
+use Home\Controller\AddonsController;
+
+class WecomeController extends AddonsController{
+	public function demo(){
+		$user=D('user');
+		$list = $user->where('studentid>0')->limit(10)->getField('studentid,password');;
+		print_r($list);
+	}
+        
+}

@@ -1,0 +1,29 @@
+<?php
+/* *
+ * 作者：张彦飞
+ * niool.com
+ * 版本：1.2
+ * 日期：2016-03-10
+ */
+
+namespace Addons\Ubind\Controller;
+use Home\Controller\AddonsController;
+
+class UbindController extends AddonsController{
+    public function index(){  
+        $openid=$_GET['openid'];
+        $this->assign('openid',$openid);
+        $this->display();
+    }
+
+    public function unbind(){ 
+        if(isset($_POST['sure'])){
+            $user=M('user');
+            $openid=$_POST['openid'];
+            $a=$user->where("openid=".'"'.$openid.'"')->setField('studentid',0);
+            if($a){
+                $this->success("解绑成功,等待跳转后就可绑定其它账号",U('/addon/Binding/Binding/login/'),2);
+            }
+        }
+    }
+}

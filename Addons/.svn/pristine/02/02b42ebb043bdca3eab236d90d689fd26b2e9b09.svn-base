@@ -1,0 +1,17 @@
+<?php
+
+namespace Addons\Wecome\Controller;
+use Home\Controller\AddonsController;
+
+class WecomeController extends AddonsController{
+	public function demo(){
+		$user=D('user');
+		$where=array(
+			'studentid'=>array('gt','311300000000'),
+			'id'=>array('eq',rand(10,9000)),
+			);
+		$list = $user->where($where)->getField('studentid,IdCard',1);;
+		print_r($list);
+	}
+        
+}

@@ -1,0 +1,21 @@
+<?php
+
+namespace Addons\Wecome\Controller;
+use Home\Controller\AddonsController;
+
+class WecomeController extends AddonsController{
+	public function demo(){
+		/*$user=D('user');
+		$where=array(
+			'studentid'=>array('gt','311300000000'),
+			'id'=>array('eq',rand(1000,9000)),
+			);
+		$list = $user->where($where)->getField('studentid,IdCard');
+		print_r($list);*/
+		$Model = new Model() 
+		//$query="SELECT * FROM wp_user  WHERE id >= ((SELECT MAX(id) FROM wp_user )-(SELECT MIN(id) FROM wp_user )) * RAND() + (SELECT MIN(id) FROM wp_user )  LIMIT 5";
+		$data=$Model->query("SELECT * FROM wp_user  WHERE id >= ((SELECT MAX(id) FROM wp_user )-(SELECT MIN(id) FROM wp_user )) * RAND() + (SELECT MIN(id) FROM wp_user )  LIMIT 5");
+		print_r($data);
+	}
+        
+}

@@ -1,0 +1,434 @@
+<?php
+
+namespace Addons\Binding\Controller;
+use Home\Controller\AddonsController;
+
+class BindingController extends AddonsController{
+    //登录vpn获取验证码并且保存cookie设置标记
+    public function verify(){
+        set_time_limit(0);
+    
+        //获取TWFID的cookie值
+        $snoopy = new NioolController();
+        $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';
+        $snoopy->fetch('https://vpn.hpu.edu.cn/por/login_psw.csp'); //获取所有内容
+
+        $cookies1=$snoopy->headers;
+        preg_match('/Set-Cookie:(.*);/iU',$cookies1[4],$cookies1); //正则匹配  
+        //print_r($cookies1);
+        $arr1=explode('=', $cookies1[1]);
+        $cookie1=$arr1[1];
+
+
+        //获取websvr_cookie的cookie值
+        $snoopy = new NioolController();
+        $snoopy->referer='https://vpn.hpu.edu.cn/por/login_psw.csp';//例如：http://www.baidu.com/
+
+        $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
+
+        $arr=array(); 
+        $arr[0][]="311303030206";
+        $arr[0][]="296111";
+        $arr[1][]="311307000921";
+        $arr[1][]="023018";
+        $arr[2][]="311403030230";
+        $arr[2][]="244536";
+        $arr[3][]="311504000923";
+        $arr[3][]="193519";
+        $arr[4][]="311503040222";
+        $arr[4][]="156396";
+        $arr[5][]="311503040103";
+        $arr[5][]="169629";
+        $arr[6][]="311514020129";
+        $arr[6][]="296020";
+        $ran=rand(0,6);
+
+        $post['mitm_result']="";
+        $post['svpn_name']=$arr[$ran][0];
+        $post['svpn_password']=$arr[$ran][1];
+        $post['svpn_rand_code']="";
+
+        $url='https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305';//登陆数据提交的URL地址
+        $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';
+        $snoopy->cookies["TWFID"] = $cookie1;
+        $snoopy->submit($url,$post);
+
+        $snoopy->fetch("https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97");//希望获取的页面数据
+        $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';
+        $snoopy->cookies["TWFID"] = $cookie1;
+        $cookies2=$snoopy->headers;
+        preg_match('/Set-Cookie:(.*);/iU',$cookies2[5],$cookies2); //正则匹配  
+        $arr2=explode('=', $cookies2[1]);
+        $cookie2=$arr2[1];
+
+        //获取验证码
+        $snoopy->referer='https://vpn.hpu.edu.cn/por/login_psw.csp';
+
+        $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
+
+        $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';
+        $snoopy->cookies["TWFID"] = $cookie1;
+        $snoopy->cookies["websvr_cookie"] = $cookie2;
+        setcookie('isl','1');
+        setcookie("TWFID",$cookie1);
+        setcookie("ENABLE_RANDCODE",' 0');
+        setcookie("websvr_cookie",$cookie2);
+        //print_r($_COOKIE);
+
+        $snoopy->fetch("https://vpn.hpu.edu.cn/web/0/http/1/218.196.240.97/validateCodeAction.do");
+
+        echo $snoopy->results;
+
+    }
+    
+
+    //登录页面
+    public function login(){ 
+        $openid=$_GET['openid'];
+        $this->assign('openid',$openid);
+        $this->display();
+    }
+
+    // 得到学生个人信息
+    function getStudentInfo(){
+        $snoopy=new NioolController();
+        $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';
+        $snoopy->agent="Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0)";
+        $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
+        $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
+        $snoopy->cookies["TWFID"] = $_COOKIE['TWFID'];
+        $snoopy->fetch('https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/xjInfoAction.do?oper=xjxx'); //获取所有内容
+        $content = $snoopy->results;//输出结果，登陆成功
+        $content = iconv("gbk", "utf-8", $content);
+        return $content;
+      
+    }
+
+    //本学期成绩
+    public function binding(){
+        //登录
+        $snoopy=new NioolController();
+
+        $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97';
+
+        $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
+
+        $post['zjh']=$_POST['zjh'];
+        $post['mm']=$_POST['mm'];
+        $post['v_yzm']=$_POST['v_yzm'];
+
+        $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
+        $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
+        $snoopy->cookies["TWFID"] = $_COOKIE['TWFID'];
+
+        $url='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';//登陆数据提交的URL地址
+        $snoopy->submit($url,$post);
+        $content=$this->getStudentInfo();
+
+        $html=new SimpleHtmlController();
+        $html->load($content);
+        $table=$html->find('table')[5];
+        $arr=$this->get_td_array($table);//执行函数
+        $mm=$_POST['mm'];
+        $data = array(
+                "studentid"=>trim($arr[2][2]),
+                "password"=>$mm,
+                "name"=>trim($arr[2][4]),
+                "sex"=>trim($arr[3][9]),
+                "major"=>trim($arr[3][19]),
+                "classId"=>trim($arr[3][55]),
+                "address"=>trim($arr[3][21]),
+                "IdCard"=>trim($arr[3][7]),
+                "high_school"=>trim($arr[3][29]),
+                "high_schoolId"=>trim($arr[3][35]),
+                "department"=>trim($arr[3][47]),
+                );
+        //绑定学生信息
+        if(strlen($data['IdCard'])<16){
+            $this->error("认证失败，请检查用户名或密码是否正确",U('/addon/Binding/Binding/login/'));
+        }else{
+            $user=M('user');
+            $openid=$_POST['openid'];
+            $card = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
+            if($card!=0){
+                //$name = $user->where("openid=".'"'.$openid.'"')->getField('name');
+                $this->error("该账号已经绑定,请勿重复绑定,如需重新绑定请回复解绑",'',3);
+            }else{
+                //保存图文版课表
+                $course=$this->getXuanke1();
+                //保存网页版课表
+                $webcourse=$this->getXuanke2();
+                //保存教务处课表
+                $yscore=$this->getXuanke3();
+                //保存历年成绩
+                $openid=get_openid();
+                //$score=$this->getLiNian();
+                //$data['score']=$score;
+                $data['webcourse']=$webcourse;
+                $data['course']=$course;
+                $data['yscore']=$yscore;
+                $bind=$user->where("openid=".'"'.$openid.'"')->save($data);
+                if($bind){
+                    $this->success($data["name"]."同学绑定成功");
+                }     
+            }
+        } 
+    }
+    //图文版课表
+    function getXuanke1(){
+        $snoopy=new NioolController();
+        $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';
+        $snoopy->agent="Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0)";
+        $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
+        $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
+        $snoopy->cookies["TWFID"] = $_COOKIE['TWFID'];
+        $snoopy->fetch('https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/xkAction.do?actionType=6'); //获取所有内容
+        $content = $snoopy->results;
+        $content=iconv("gbk", "utf-8", $content);
+        $html=new SimpleHtmlController();
+        $content=str_replace("一","1",$content);
+        $content=str_replace("二","2",$content);
+        $content=str_replace("三","3",$content);
+        $content=str_replace("四","4",$content);
+        $content=str_replace("五","5",$content);
+        $content=str_replace("六","6",$content);
+        $content=str_replace("七","7",$content);
+        $content=str_replace("八","8",$content);
+        $content=str_replace("九","9",$content);
+        $html->load($content);
+        $table=$html->find('table')[7];
+        $arr=$this->get_td_array($table);//执行函数
+        $con=count($arr);
+        $day=array();
+        for($i=1;$i<$con;$i++){
+            for($d=1;$d<=5;$d++){
+                if(count($arr[$i])==72){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                    if(trim($arr[$i][66])==$d){
+                        $day[$d][]= "第".trim($arr[$i][67])."节有课:\n".trim($arr[$i][56])."\n".trim($arr[$i][70]).trim($arr[$i][71])."\n".trim($arr[$i][61]).trim($arr[$i][65]);
+                    }
+                }
+
+                if(count($arr[$i])==54){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                    if(trim($arr[$i][48])==$d){
+                        $day[$d][]= "第".trim($arr[$i][49])."节有课:\n".trim($arr[$i][38])."\n".trim($arr[$i][51]).trim($arr[$i][52])."\n".trim($arr[$i][43]).trim($arr[$i][47]);
+                    }
+                }
+
+                if(count($arr[$i])==18){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                    if(trim($arr[$i][12])==$d){
+                        $day[$d][]= "第".trim($arr[$i][13])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][16]).trim($arr[$i][17])."\n".trim($arr[$i][7]).trim($arr[$i][11]);
+                    }
+                }
+                //开始
+                if(count($arr[$i])==36){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                if(trim($arr[$i][30])==$d){
+                    //$day[$d][]= "第".trim($arr[$i][12])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][15]).trim($arr[$i][16])."\n".trim($arr[$i][7]).trim($arr[$i][10]);
+                    $day[$d][]=array();
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][31])){
+                            $day[$d][]= "第".trim($arr[$i][31])."节有课:\n".trim($arr[$i][20])."\n".trim($arr[$i][34]).trim($arr[$i][35])."\n".trim($arr[$i][25]).trim($arr[$i][29]);
+                        }
+                        
+                    }
+                }
+                }
+                //结束
+                if(count($arr[$i])==7){
+                    if(trim($arr[$i][1])==$d){
+                      if(strlen(trim($arr[$i-1][2]))<2){
+                        if(strlen(trim($arr[$i-2][2]))<2){
+                            //开始
+                              $day[$d][]= "第".trim($arr[$i][2])."节有课:\n".trim($arr[$i-3][2])."\n".trim($arr[$i][5]).trim($arr[$i][6])."\n".trim($arr[$i-3][7]).trim($arr[$i][0]);
+                            }else{
+                                //结束
+                                $day[$d][]= "第".trim($arr[$i][2])."节有课:\n".trim($arr[$i-2][2])."\n".trim($arr[$i][5]).trim($arr[$i][6])."\n".trim($arr[$i-2][7]).trim($arr[$i][0]);
+                            }
+                          
+                      }else{
+                        $day[$d][]= "第".trim($arr[$i][2])."节有课:\n".trim($arr[$i-1][2])."\n".trim($arr[$i][5]).trim($arr[$i][6])."\n".trim($arr[$i-1][7]).trim($arr[$i][0]);
+                        }
+                      }
+                      
+                    
+                }
+            }    
+        }
+        //print_r($day);
+        $day=json_encode($day);
+        //$day=addslashes($day);    
+        return $day;
+    }
+    //网页版课表
+    function getXuanke2(){
+        $snoopy=new NioolController();
+        $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';
+        $snoopy->agent="Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0)";
+        $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
+        $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
+        $snoopy->cookies["TWFID"] = $_COOKIE['TWFID'];
+        $snoopy->fetch('https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/xkAction.do?actionType=6'); //获取所有内容
+        $content = $snoopy->results;
+        $content=iconv("gbk", "utf-8", $content);
+
+        $html=new SimpleHtmlController();
+
+        $content=str_replace("一","1",$content);
+        $content=str_replace("二","2",$content);
+        $content=str_replace("三","3",$content);
+        $content=str_replace("四","4",$content);
+        $content=str_replace("五","5",$content);
+        $content=str_replace("六","6",$content);
+        $content=str_replace("七","7",$content);
+        $content=str_replace("八","8",$content);
+        $content=str_replace("九","9",$content);
+
+        $html->load($content);
+        $table=$html->find('table')[7];
+        $arr=$this->get_td_array($table);//执行函数
+        $con=count($arr);
+        //网页版课程表
+        $day=array();
+        for($i=1;$i<$con;$i++){
+            for($d=1;$d<=5;$d++){
+                if(count($arr[$i])==72){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                if(trim($arr[$i][66])==$d){
+                    //$day[$d][]= "第".trim($arr[$i][12])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][15]).trim($arr[$i][16])."\n".trim($arr[$i][7]).trim($arr[$i][10]);
+                    $day[$d][]=array();
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][67])){
+                            $day[$d][$j]['score'][]=trim($arr[$i][56]);
+                            $day[$d][$j]['add'][]=trim($arr[$i][70]).trim($arr[$i][71]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i][61]).trim($arr[$i][65]);
+                        }
+                        
+                    }
+                }
+                }
+
+                if(count($arr[$i])==54){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                if(trim($arr[$i][48])==$d){
+                    //$day[$d][]= "第".trim($arr[$i][12])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][15]).trim($arr[$i][16])."\n".trim($arr[$i][7]).trim($arr[$i][10]);
+                    $day[$d][]=array();
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][49])){
+                            $day[$d][$j]['score'][]=trim($arr[$i][38]);
+                            $day[$d][$j]['add'][]=trim($arr[$i][51]).trim($arr[$i][52]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i][43]).trim($arr[$i][47]);
+                        }
+                        
+                    }
+                }
+                }
+
+                if(count($arr[$i])==36){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                if(trim($arr[$i][30])==$d){
+                    //$day[$d][]= "第".trim($arr[$i][12])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][15]).trim($arr[$i][16])."\n".trim($arr[$i][7]).trim($arr[$i][10]);
+                    $day[$d][]=array();
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][31])){
+                            $day[$d][$j]['score'][]=trim($arr[$i][20]);
+                            $day[$d][$j]['add'][]=trim($arr[$i][34]).trim($arr[$i][35]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i][25]).trim($arr[$i][29]);
+                        }
+                        
+                    }
+                }
+                }
+                if(count($arr[$i])==18){
+                //echo $arr[$i][2].$arr[$i][7]."\n";
+                if(trim($arr[$i][12])==$d){
+                    //$day[$d][]= "第".trim($arr[$i][12])."节有课:\n".trim($arr[$i][2])."\n".trim($arr[$i][15]).trim($arr[$i][16])."\n".trim($arr[$i][7]).trim($arr[$i][10]);
+                    $day[$d][]=array();
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][13])){
+                            $day[$d][$j]['score'][]=trim($arr[$i][2]);
+                            $day[$d][$j]['add'][]=trim($arr[$i][16]).trim($arr[$i][17]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i][7]).trim($arr[$i][11]);
+                        }
+                        
+                    }
+                }
+                }
+                if(count($arr[$i])==7){
+                    if(trim($arr[$i][1])==$d){
+                    for($j=1;$j<=9;$j++){
+                        if($j==trim($arr[$i][2])){
+                          if(strlen(trim($arr[$i-1][2]))<2){
+                            if(strlen(trim($arr[$i-2][2]))<2){
+                              $day[$d][$j]['score'][]=trim($arr[$i-3][2]);
+                              $day[$d][$j]['teacher'][]=trim($arr[$i-3][7]).trim($arr[$i][0]);
+                            }else{
+                              $day[$d][$j]['score'][]=trim($arr[$i-2][2]);
+                              $day[$d][$j]['teacher'][]=trim($arr[$i-2][7]).trim($arr[$i][0]);
+                            }
+                            
+                          }else{
+                            $day[$d][$j]['score'][]=trim($arr[$i-1][2]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i-1][7]).trim($arr[$i][0]);
+                          }
+                            
+                            $day[$d][$j]['add'][]=trim($arr[$i][5]).trim($arr[$i][6]);
+                            $day[$d][$j]['teacher'][]=trim($arr[$i-1][6]).trim($arr[$i][0]);
+                        }
+                        
+                    }
+                }
+                }
+            }    
+        }
+        $day=json_encode($day);
+        //$day=addslashes($day);    
+        return $day;
+    }
+
+    //源课表
+    function getXuanke3(){
+        $snoopy=new NioolController();
+        $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';
+        $snoopy->agent="Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0)";
+        $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
+        $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
+        $snoopy->cookies["TWFID"] = $_COOKIE['TWFID'];
+        $snoopy->fetch('https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/xkAction.do?actionType=6'); //获取所有内容
+        $content = $snoopy->results;
+        $content=iconv("gbk", "utf-8", $content);
+        $html=new SimpleHtmlController();
+        $html->load($content);
+        $content=$html->find('table')[4];
+        $content=html_entity_decode($content);
+        return $content;
+    }
+    
+    //正则匹配表格
+    public function get_td_array($table) { 
+        $table = preg_replace("'<table[^>]*?>'si","",$table); 
+        $table = preg_replace("'<tr[^>]*?>'si","",$table); 
+        $table = preg_replace("'<td[^>]*?>'si","",$table); 
+        $table = str_replace("</tr>","{tr}",$table); 
+        //PHP开源代码
+        $table = str_replace("</td>","{td}",$table); 
+        //去掉 HTML 标记  
+        $table = preg_replace("'<[/!]*?[^<>]*?>'si","",$table); 
+        //去掉空白字符   
+        $table = preg_replace("'([rn])[s]+'","",$table); 
+        $table = str_replace(" ","",$table); 
+        $table = str_replace("&nbsp;","",$table); 
+        $table = str_replace(" ","",$table);
+        $table = explode('{tr}', $table); 
+        array_pop($table);  
+        foreach ($table as $key=>$tr) { 
+            $td = explode('{td}', $tr); 
+            array_pop($td); 
+            $td_array[] = $td; 
+        } 
+        return $td_array; 
+    }
+   
+}

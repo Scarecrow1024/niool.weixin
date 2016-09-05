@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+        .row{margin: 0px;}
+        #navid{background-color: #B9D3EE;height: 40px;} 
+        #navid span{color: #ffffff;font-size: 18px; line-height: 35px;}
+        #content{margin: 15px 10px 0px 10px;border-top: 1px solid #B9D3EE;}
+        .glyphicon-user, .glyphicon-education, .glyphicon-eye-open{line-height: 32px;font-size: 27px;color: #B9D3EE;}
+        .btn-info{width: 100%;background-color: #B9D3EE;border-color:#B9D3EE; }
+        .glyphicon{color: #B9D3EE;}
+        footer{background-color:#B9D3EE;color:#666;position: fixed;bottom: 0px;width: 100%;padding-top: 10px;padding-bottom: 10px;text-align: center;}
+    </style>
+    <script type="text/javascript">
+    //禁止显示连接
+    function onBridgeReady(){
+     WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }
+</script>
+    <script>
+
+        $(document).ready(function() {
+            /* 数据校验 */
+            $('#buttonId').click(function() {
+                var yuan_id= $("#yuan_id").val();
+                var build_id = $("#build_id").val();
+                var unit_id = $("#unit_id").val();
+                var house_id = $("#house_id").val();
+                var user_pwd = $("#user_pwd").val();
+
+                if (yuan_id == 0) {alert('请选择家属院'); return false;}
+                if (build_id == 0) {alert('请选择家属楼'); return false;}
+                if (unit_id == 0) {alert('请选择单元号'); return false;}
+                if (house_id == 0) {alert('请选择房间号'); return false;}
+                if (user_pwd == '') {alert('请输入密码'); return false;}
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- 头部 -->
+    <div class="row" id="navid">
+        <div class="col-xs-12" style="text-align: center;">
+            <span>水电暖费用查询</span>
+        </div>
+    </div>
+    <!-- 表单 -->
+    <div class="row">
+                <form class="form-horizontal" action="{:U('do_login')}" method="post">
+                <literal>
+                <div class="form-group">
+                </div>
+                    <div class="form-group">
+                        <label for="input1" class="col-xs-2 control-label">
+                            <span >家属院</span>
+                        </label>
+                        <literal>
+                        <div class="col-xs-8">
+                            <select name="yuan_id" class="form-control" id="yuan_id">
+                            <option value="0">请选择</option>
+                            <option value="1">文苑</option>
+                            <option value="2">馨苑</option>
+                            <option value="3">瀚苑</option>
+                            <option value="4">静苑</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input2" class="col-xs-2 control-label">
+                                <span >家属楼</span>
+                            </label>
+                        <div class="col-xs-8">
+                            <select name="build_id" class="form-control" id="build_id">
+                                <option value='0'>请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input3" class="col-xs-2 control-label">
+                                <span >单元号</span>
+                        </label>
+                        <div class="col-xs-8">
+                            <select name="unit_id" class="form-control" id="unit_id">
+                                <option value='0'>请选择</option>
+                                <option value='1'>1单元</option>
+                                <option value='2'>2单元</option>
+                                <option value='3'>3单元</option>
+                                <option value='4'>4单元</option>
+                                <option value='5'>5单元</option>
+                                <option value='6'>6单元</option>
+                                <option value='7'>7单元</option>
+                            </select>
+                        </div>
+                        </literal>
+                    </div>
+                    <div class="form-group">
+                        <label for="input4" class="col-xs-2 control-label">
+                            <span class="">房间号</span>
+                        </label>
+                        <div class="col-xs-8">
+                            <select name="house_id" class="form-control" id="house_id">
+                                <option value='0'>请选择</option>
+                            </select>
+                        </div>
+                        </literal>
+                    </div>
+                    <div class="form-group">
+                        <label for="input5" class="col-xs-2 control-label">
+                            <span >密码：</span>
+                        </label>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" value="3989182" name="user_pwd" id="input3" placeholder="密码">
+                        </div>
+                        </literal>
+                    </div>
+                    <input type="hidden" name="user_type" value="1">
+                    <input type="hidden" name="user_name" value="">
+                    <input type="submit" class="btn btn-info" id="buttonId" name="Submit" value="登陆">
+                </form>
+            </div>
+    <footer>
+        &copy;河南理工大学后勤集团<br>
+    </footer>
+</body>
+<script type="text/javascript">
+//根据yuan_id获取build_id
+$(function(){
+    $("#yuan_id").change(function() {
+        $("#build_id").empty();
+        if($("#yuan_id").val()!="0") {
+            $("#build_id").append("<option value='0'>请选择</option>");
+            var id = $("#yuan_id").val();
+            jQuery.getJSON("http://niool.com/weixin/index.php?s=/addon/Houqin/Houqin/json_build/id/"+id,"",function(data){
+                for(var j=0;j<data.length;j++) {
+                    $("#build_id").append("<option value='"+data[j].name+"'>"+data[j].value+"</option>");
+                }
+            },'json');
+        }
+    });
+});
+//根据unit_id获取hourse_id
+$(function(){
+    $("#unit_id").change(function() {
+        $("#house_id").empty();
+        if($("#unit_id").val()!="0") {
+            $("#house_id").append("<option value='0'>请选择房间</option>");
+            var id = $("#unit_id").val();
+            jQuery.getJSON("http://niool.com/weixin/index.php?s=/addon/Houqin/Houqin/json_hourse/id/"+id,"",function(data){
+                for(var j=0;j<data.length;j++) {
+                    $("#house_id").append("<option value='"+data[j].name+"'>"+data[j].value+"</option>");
+                }
+            },'json');
+        }
+    });
+});
+
+</script>
+</html>
