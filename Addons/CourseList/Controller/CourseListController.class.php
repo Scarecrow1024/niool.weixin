@@ -5,7 +5,13 @@ use Home\Controller\AddonsController;
 
 class CourseListController extends AddonsController{
     //获取网页版课表
-    public function get_zhou(){
+    public function course(){
+        $openid=get_openid();
+        $user=M('user');
+        $data=$user->where("openid=".'"'.$openid.'"')->getField('webcourse');
+        $day=json_decode($data,true);    
+        //$this->assign('day',$day);
+
         $rs=curl_init();
         $user=M('user');
         $openid=get_openid();
@@ -41,15 +47,9 @@ class CourseListController extends AddonsController{
         //$html = new simple_html_dom();
         $content=strip_tags($content)."<br>";
         preg_match_all("/[0-9]+/", $content, $matches);
-        return $matches[0][7];
-    }
-    public function course(){
-        $openid=get_openid();
-        $user=M('user');
-        $data=$user->where("openid=".'"'.$openid.'"')->getField('webcourse');
-        $day=json_decode($data,true);    
-        //$this->assign('day',$day);
-        $this->assign(['day'=>$day,'zhou'=>$this->get_zhou()]);
+        $zhou = $matches[0][7];
+
+        $this->assign(['day'=>$day,'zhou'=>$zhou]);
         //$this->assign('zhou',$this->get_zhou());
         $this->display();        
     }
