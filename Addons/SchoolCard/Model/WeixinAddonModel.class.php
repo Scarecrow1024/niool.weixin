@@ -53,8 +53,6 @@ class WeixinAddonModel extends WeixinModel {
                 preg_match_all("/[0-9]+/", $content, $matches);
                 //echo "<pre>";
                 //print_r($matches);
-                session_start();
-                session('zhou',$matches[0][7]);
                 $str="你的饭卡余额为￥".$matches[0][4].".".$matches[0][5]."元"."\n温馨提示:你有".$matches[0][1]."项赛课作业";
                 $user=M('user');
                 $openid=get_openid();
