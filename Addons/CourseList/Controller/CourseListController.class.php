@@ -49,7 +49,7 @@ class CourseListController extends AddonsController{
         preg_match_all("/[0-9]+/", $content, $matches);
         $zhou = $matches[0][7];
         echo $zhou;
-
+        die;
         $this->assign(['day'=>$day,'zhou'=>$zhou]);
         //$this->assign('zhou',$this->get_zhou());
         $this->display();        
