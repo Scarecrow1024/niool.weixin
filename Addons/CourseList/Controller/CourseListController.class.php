@@ -49,7 +49,7 @@ class CourseListController extends AddonsController{
         $data=$user->where("openid=".'"'.$openid.'"')->getField('webcourse');
         $day=json_decode($data,true);    
         $this->assign('day',$day);
-        $this->assert('zhou',$this->get_zhou());
+        $this->assign('zhou',$this->get_zhou());
         $this->display();        
     }
     //获取教务处课表
