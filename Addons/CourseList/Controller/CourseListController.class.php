@@ -48,6 +48,7 @@ class CourseListController extends AddonsController{
         $content=strip_tags($content)."<br>";
         preg_match_all("/[0-9]+/", $content, $matches);
         $zhou = $matches[0][7];
+        echo $zhou;
 
         $this->assign(['day'=>$day,'zhou'=>$zhou]);
         //$this->assign('zhou',$this->get_zhou());
