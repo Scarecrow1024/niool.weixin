@@ -1,7 +1,0 @@
-<?php
-namespace Addons\XiaoLi\Controller;
-use Home\Controller\AddonsController;
-
-class XiaoLiController extends AddonsController{
-    
-}

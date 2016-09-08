@@ -1,1 +1,0 @@
-DELETE FROM wp_keyword WHERE addon='Juhe';
