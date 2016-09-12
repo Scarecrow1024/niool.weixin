@@ -117,8 +117,8 @@ class RepairController extends AddonsController{
         $openid=$_POST['openid'];
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
-        $name = $user->where("openid=".'"'.$openid.'"')->getField('name');
-        $name=mb_substr($name, 1,2);
+
+        $name = 'HPU';
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
         $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
