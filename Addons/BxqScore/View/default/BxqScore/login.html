@@ -17,10 +17,16 @@
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: 'wxc5d2229adc0102a3', // 必填，公众号的唯一标识
-            timestamp: Date.parse(new Date()), // 必填，生成签名的时间戳
-            nonceStr: 'qweqwrwerqwer', // 必填，生成签名的随机串
-            signature: '',// 必填，签名，见附录1
-            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            timestamp: '1474446849',//这个一定要与上面的php代码里的一样。
+            nonceStr: '1474446849',//这个一定要与上面的php代码里的一样。
+            signature: '<?= $share;?>',
+            jsApiList: [
+              // 所有要调用的 API 都要加到这个列表中
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo'
+            ]
         });
     </script>
     <style>

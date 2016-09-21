@@ -190,6 +190,9 @@ class BxqScoreController extends AddonsController{
         $mm = $user->where("openid=".'"'.$openid.'"')->getField('password');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $this->assign('mm',$mm);
+        $share=$this->share();
+        $this->assign('share',$share);
+        $this->assign('time',time());
         $this->assign('studentid',$studentid);
         $this->display();
     }
@@ -342,12 +345,11 @@ class BxqScoreController extends AddonsController{
         $jsapi = json_decode($jsapi);
         $j = get_object_vars($jsapi);
         $jsapi = $j['ticket'];//get JSAPI
-        echo $jsapi;
-        die;
-        $time = 14999923234;
+        
+        $time = time();
         $noncestr= $time;
         $jsapi_ticket= $jsapi;
-        $timestamp=$time;
+        $timestamp='1474446849';
         $url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $and = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$noncestr."&timestamp=".$timestamp."&url=".$url."";
         $signature = sha1($and);
