@@ -28,6 +28,34 @@
                 'onMenuShareWeibo'
             ]
         });
+
+        wx.ready(function () {
+            wx.onMenuShareTimeline({
+                title: "123", // 分享标题
+                link: "http://www.brandhd.com/v/events/view/123", // 分享链接
+                imgUrl: "http://www.brandhd.com", // 分享图标
+                success: function () { 
+                    alert('ok')
+                },
+                cancel: function () { 
+                    alert('noo');
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: "12334", // 分享标题
+                desc: "4324134", // 分享描述
+                link: "http://www.brandhd.com/v/events/view/123", // 分享链接
+                imgUrl: "http://www.brandhd.com", // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () { 
+                    alert('ok')// 用户确认分享后执行的回调函数
+                },
+                cancel: function () { 
+                    alert('no');
+                }
+            });
+        });
     </script>
     <style>
         .row{margin: 0px;}
