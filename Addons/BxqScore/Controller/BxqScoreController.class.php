@@ -345,6 +345,8 @@ class BxqScoreController extends AddonsController{
         $jsapi = json_decode($jsapi);
         $j = get_object_vars($jsapi);
         $jsapi = $j['ticket'];//get JSAPI
+        echo  $jsapi;
+        die;
         
         $time = time();
         $noncestr= $time;
