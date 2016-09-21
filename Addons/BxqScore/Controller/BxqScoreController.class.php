@@ -185,7 +185,12 @@ class BxqScoreController extends AddonsController{
 
     //登录页面
     public function login(){   
-        echo get_token();
+        $token = 'S6Kv7GKT0JBea_sP-bA0qLMz3k0RD8b-rSix8PCaaEYtZrZE2bFHELDWuMxCIpnW3dENX_2Vs3_FtQzBXv5jGtKYF2AhGPdIDwINUzU7OLzeBUUAzRPkl2yIonQP3UavNOYhAGAUVF';
+        $jsapi = file_get_contents("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$token."&type=jsapi");
+        $jsapi = json_decode($jsapi);
+        $j = get_object_vars($jsapi);
+        $jsapi = $j['ticket'];//get JSAPI
+        echo $jsapi;
         die;
         $user=M('user');
         $openid=get_openid();
