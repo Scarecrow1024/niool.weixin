@@ -329,7 +329,7 @@ class BxqScoreController extends AddonsController{
     public function share(){
         $appid = 'wxc5d2229adc0102a3';
         $secret = '886d44b2cfec214e8d752b731e5da432 ';
-        echo $this->access_token();
+        echo get_token();
         die;
         /*$auth = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$appid."&secret=".$secret."&grant_type=authorization_code");//通过code换取网页授权access_token
         $jsonauth = json_decode($auth); //对JSON格式的字符串进行编码
