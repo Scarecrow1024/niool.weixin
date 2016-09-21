@@ -195,17 +195,17 @@ class BxqScoreController extends AddonsController{
         $url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $and = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$noncestr."&timestamp=".$timestamp."&url=".$url."";
         $signature = sha1($and);
-echo $url;
-        
-        die;
+
         $user=M('user');
         $openid=get_openid();
         $mm = $user->where("openid=".'"'.$openid.'"')->getField('password');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $this->assign('mm',$mm);
-        /*$share=$this->share();
-        $this->assign('share',$share);*/
-        $this->assign('time',time());
+
+        $this->assign('timestamp',$timestamp);
+        $this->assign('noncestr',$noncestr);
+        $this->assign('signature',$signature);
+
         $this->assign('studentid',$studentid);
         $this->display();
     }
