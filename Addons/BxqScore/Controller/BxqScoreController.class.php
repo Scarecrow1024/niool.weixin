@@ -185,6 +185,8 @@ class BxqScoreController extends AddonsController{
 
     //登录页面
     public function login(){   
+        echo get_token();
+        die;
         $user=M('user');
         $openid=get_openid();
         $mm = $user->where("openid=".'"'.$openid.'"')->getField('password');
