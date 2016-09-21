@@ -322,5 +322,26 @@ class BxqScoreController extends AddonsController{
         } 
         return $td_array; 
     }
+
+    public function share(){
+        $appid = 'wxc5d2229adc0102a3';
+        $secret = '886d44b2cfec214e8d752b731e5da432 ';
+        echo access_token();
+        die;
+        
+        $jsapi = file_get_contents("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$access_token."&type=jsapi");
+        $jsapi = json_decode($jsapi);
+        $j = get_object_vars($jsapi);
+        $jsapi = $j['ticket'];//get JSAPI
+        
+        $time = 14999923234;
+        $noncestr= $time;
+        $jsapi_ticket= $jsapi;
+        $timestamp=$time;
+        $url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $and = "jsapi_ticket=".$jsapi_ticket."&noncestr=".$noncestr."&timestamp=".$timestamp."&url=".$url."";
+        $signature = sha1($and);
+        return $signature;
+    }
    
 }
