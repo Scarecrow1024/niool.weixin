@@ -131,7 +131,7 @@ class KclassController extends AddonsController{
         $snoopy->referer='https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do';
         $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
         //post学期和校区
-        $post1['zxxnxq']='2015-2016-1-1';
+        $post1['zxxnxq']='2016-2017-1-1';
         $post1['zxXaq']='01';
         $snoopy->cookies["websvr_cookie"] = $_COOKIE['websvr_cookie'];
         $snoopy->cookies["ENABLE_RANDCODE"] = $_COOKIE['ENABLE_RANDCODE'];
