@@ -338,6 +338,40 @@ class BindingController extends AddonsController{
         $html->load($content);
         $table=$html->find('table')[7];
         $arr=$this->get_td_array($table);//执行函数
+        //第一步获取到所有的课程一个课程放到一个数组中去
+        $data = array();
+        for($i=1;$i<count($arr);$i++){
+            if((count($arr[$i])%18)==0){
+                if(count($arr[$i])>18){
+                    $data[$i]=array_chunk($arr[$i], 18);
+                }else{
+                    $data[$i][]=$arr[$i];
+                    if(count($arr[$i+1])==7){
+                        $data[$i][]=$arr[$i+1];
+                    }
+                    if(count($arr[$i+1])==7&&count($arr[$i+2])==7){
+                        $data[$i][]=$arr[$i+2];
+                    }
+                    if(count($arr[$i+2])==7&&count($arr[$i+3])==7){
+                        $data[$i][]=$arr[$i+3];
+                    }
+                }   
+            }
+        }
+        //return $data;
+        $js_data=array();
+        foreach($data as $k=>$v){
+            for($i=0;$i<count($v);$i++){
+                if(count($data[$k][$i])==18){
+                    $js_data[$data[$k][$i][12]][]="第".trim($data[$k][$i][13])."节有课:\n".trim($data[$k][$i][2])."\n".trim($data[$k][$i][16].$data[$k][$i][17])."\n".trim($data[$k][$i][7]).trim($data[$k][$i][11]);
+                }else{
+                    $js_data[$data[$k][$i][1]][]="第".trim($data[$k][$i][2])."节有课:\n".trim($data[$k][0][2])."\n".trim($data[$k][$i][5].$data[$k][$i][6])."\n".trim($data[$k][0][7]).trim($data[$k][$i][0]);
+                }
+            }
+        }
+
+        return json_encode($js_data);
+
         $con=count($arr);
         $day=array();
         for($i=1;$i<$con;$i++){
@@ -436,6 +470,48 @@ class BindingController extends AddonsController{
         $html->load($content);
         $table=$html->find('table')[7];
         $arr=$this->get_td_array($table);//执行函数
+        //第一步获取到所有的课程一个课程放到一个数组中去
+        $data = array();
+        for($i=1;$i<count($arr);$i++){
+            if((count($arr[$i])%18)==0){
+                if(count($arr[$i])>18){
+                    $data[$i]=array_chunk($arr[$i], 18);
+                }else{
+                    $data[$i][]=$arr[$i];
+                    if(count($arr[$i+1])==7){
+                        $data[$i][]=$arr[$i+1];
+                    }
+                    if(count($arr[$i+1])==7&&count($arr[$i+2])==7){
+                        $data[$i][]=$arr[$i+2];
+                    }
+                    if(count($arr[$i+2])==7&&count($arr[$i+3])==7){
+                        $data[$i][]=$arr[$i+3];
+                    }
+                }   
+            }
+        }
+
+        //unset($data[21][0][0]);
+
+        return $arr;
+        $js_data=array();
+        foreach($data as $k=>$v){
+            for($i=0;$i<count($v);$i++){
+                if(count($data[$k][$i])==18){
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['name'][]=trim($data[$k][$i][2]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['teacher'][]=trim($data[$k][$i][7]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['addr'][]=trim($data[$k][$i][16].$data[$k][$i][17]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['week'][]=trim($data[$k][$i][11]);
+                }else{
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['name'][]=trim($data[$k][0][2]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['teacher'][]=trim($data[$k][0][7]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['addr'][]=trim($data[$k][$i][5].$data[$k][$i][6]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['week'][]=trim($data[$k][$i][0]);
+                }
+            }
+        }
+        return $js_data;
+
         $con=count($arr);
         //网页版课程表
         $day=array();
