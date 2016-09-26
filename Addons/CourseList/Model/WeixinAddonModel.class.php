@@ -45,9 +45,9 @@ class WeixinAddonModel extends WeixinModel {
 	            $arr[1]['Url']=$url2;
 	        }else{
 	        	$rs=curl_init();
-		        $url="http://my.hpu.edu.cn/userPasswordValidate.portal";
+		        $url1="http://my.hpu.edu.cn/userPasswordValidate.portal";
 		        $post="Login.Token1=311309010130&Login.Token2=024361&goto=http%3A%2F%2Fmy.hpu.edu.cn%2FloginSuccess.portal&gotoOnFail=http%3A%2F%2Fmy.hpu.edu.cn%2FloginFailure.portal"; 
-		        curl_setopt($rs,CURLOPT_URL,$url);
+		        curl_setopt($rs,CURLOPT_URL,$url1);
 		        //post数据来源
 		        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/login.portal");
 		        curl_setopt($rs,CURLOPT_POST,1);
@@ -65,7 +65,7 @@ class WeixinAddonModel extends WeixinModel {
 		        preg_match_all("/[0-9]+/", $content, $matches);
 		        //print_r($matches);
 		        $zhou=$matches[0][7];
-	            $title="第$zhou周星期".$weekarray[date("w")]."的课表如下";
+	            $title="第".$zhou."周星期".$weekarray[date("w")]."的课表如下";
 	            $arr[0]['Title']=$title;
 	            $arr[0]['Url']=$url;
 	            $arr[0]['PicUrl']="http://imgsrc.baidu.com/forum/w%3D580/sign=b14afd2e0cf41bd5da53e8fc61da81a0/5c6409d162d9f2d39b783eeaabec8a136227ccde.jpg";
