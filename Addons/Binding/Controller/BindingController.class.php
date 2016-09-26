@@ -510,7 +510,7 @@ class BindingController extends AddonsController{
                 }
             }
         }
-        return $js_data;
+        return json_encode($js_data);
 
         $con=count($arr);
         //网页版课程表
