@@ -491,9 +491,7 @@ class BindingController extends AddonsController{
             }
         }
 
-        //unset($data[21][0][0]);
-
-        return $arr;
+        //return $arr;
         $js_data=array();
         foreach($data as $k=>$v){
             for($i=0;$i<count($v);$i++){
