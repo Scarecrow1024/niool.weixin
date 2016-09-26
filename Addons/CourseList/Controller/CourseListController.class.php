@@ -9,8 +9,31 @@ class CourseListController extends AddonsController{
         $openid=get_openid();
         $user=M('user');
         $data=$user->where("openid=".'"'.$openid.'"')->getField('webcourse');
-        $day=json_decode($data,true);    
+        $day=json_decode($data,true);   
 
+        $rs=curl_init();
+        $url="http://my.hpu.edu.cn/userPasswordValidate.portal";
+        $post="Login.Token1=311309010130&Login.Token2=024361&goto=http%3A%2F%2Fmy.hpu.edu.cn%2FloginSuccess.portal&gotoOnFail=http%3A%2F%2Fmy.hpu.edu.cn%2FloginFailure.portal"; 
+        curl_setopt($rs,CURLOPT_URL,$url);
+        //post数据来源
+        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/login.portal");
+        curl_setopt($rs,CURLOPT_POST,1);
+        curl_setopt($rs,CURLOPT_POSTFIELDS,$post);  
+        curl_setopt($rs,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($rs,CURLOPT_FOLLOWLOCATION,1);
+        //跳转到数据页面
+        curl_exec($rs);
+        curl_setopt($rs,CURLOPT_URL,"http://my.hpu.edu.cn/viewschoolcalendar3.jsp");
+        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/index.portal");
+        curl_setopt($rs,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($rs);
+        curl_close($rs);
+        $content=strip_tags($content)."<br>";
+        preg_match_all("/[0-9]+/", $content, $matches);
+        //print_r($matches);
+        $zhou=$matches[0][7];
+
+        $this->assign('zhou',$zhou);
         $this->assign(['day'=>$day]);
         //$this->assign('zhou',$this->get_zhou());
         $this->display();        
