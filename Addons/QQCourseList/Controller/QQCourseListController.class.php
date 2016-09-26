@@ -11,6 +11,7 @@ class QQCourseListController extends AddonsController{
         //$data=$user->where("openid=".'"'.$openid.'"')->getField('courselist');
         $data = $user->where('id=1')->getField('courselist');
         $day=json_decode($data,true); 
+        var_dump($day);die;
         $this->assign('day',$day);
         $this->display();        
     }
