@@ -282,7 +282,7 @@ class BindingController extends AddonsController{
                 $data['yscore']=$yscore;
                 $bind=$user->where("openid=".'"'.$openid.'"')->save($data);
                 if($bind){
-                    $this->success($data["name"]."同学绑定成功");
+                    $this->success($data["name"]."同学绑定成功",U('/addon/CourseList/CourseList/course/'));
                 }     
             }
         } 
