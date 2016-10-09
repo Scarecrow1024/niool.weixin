@@ -72,8 +72,12 @@ class WeixinAddonModel extends WeixinModel {
 	            $arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表";
 	            $arr[1]['Url']=$url2;
 
+	            $xingqi = date('w');
+	            if(date('w')==0){
+	            	$xingqi = 7;
+	            }
 
-	            foreach($data[date('w')] as $v){
+	            foreach($data[$xingqi] as $v){
 	                $arr[]['Title']=$v;
 	            }
 	            
