@@ -71,9 +71,8 @@ class WeixinAddonModel extends WeixinModel {
 	            $arr[0]['PicUrl']="http://imgsrc.baidu.com/forum/w%3D580/sign=b14afd2e0cf41bd5da53e8fc61da81a0/5c6409d162d9f2d39b783eeaabec8a136227ccde.jpg";
 	            $arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表";
 	            $arr[1]['Url']=$url2;
-	            if(date('w')==0){
-	            	date('w')=7;
-	            }
+
+
 	            foreach($data[date('w')] as $v){
 	                $arr[]['Title']=$v;
 	            }
