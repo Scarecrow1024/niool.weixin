@@ -220,7 +220,7 @@ class QQBindController extends AddonsController{
                 $data['gender']=$_SESSION['gender'];
                 $bind=$user->add($data);
                 if($bind){
-                    $this->success($data["name"]."同学绑定成功","http://niool.com/weixin/index.php?s=/addon/QQCourseList/QQCourseList/course.html");
+                    $this->success($data["name"]."同学绑定成功","https://blog.niool.com/weixin/index.php?s=/addon/QQCourseList/QQCourseList/course.html");
                 }     
             }
         } 
