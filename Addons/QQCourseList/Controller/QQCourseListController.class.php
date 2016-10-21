@@ -9,7 +9,7 @@ class QQCourseListController extends AddonsController{
         $openid=$_SESSION['openid'];
         $user=M('qqcourselist');
         //$data=$user->where("openid=".'"'.$openid.'"')->getField('courselist');
-        $data = $user->where('id=1')->getField('courselist');
+        $data = $user->where('id=22')->getField('courselist');
         $day=json_decode($data,true); 
         $this->assign('day',$day);
         $this->display();        
