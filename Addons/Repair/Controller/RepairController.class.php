@@ -69,9 +69,29 @@ class RepairController extends AddonsController{
         //正则匹配cookie并使用
         preg_match_all('/Set-Cookie:(.*);/iU',$content,$cookies); //正则匹配  
         curl_close($ch);
-        print_r($content);
+        /*print_r($content);
         echo "<br>";
-        print_r($cookies);
+        print_r($cookies);*/
+
+        $post = "bxfws=26&bxqy=80&bxly=96&mphm=222&fjlx=-1&bxlx=0&bxnr=2&reporttime=2016-10-21%2C13%3A55%3A08&reporter=311309010130&reporttels=15639128888&content=%D4%DA%CF%DF%B1%A8%D0%DE%B2%E2%CA%D4%A3%AC%B2%BB%D3%C3%B9%FD%C0%B4&rstate=ystate";
+        $repair_url = "http://218.196.240.133/nqwx/report.jsp"; 
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$repair_url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
+        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=311309010125");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content2=curl_exec($ch);
+        //正则匹配cookie并使用
+        preg_match_all('/Set-Cookie:(.*);/iU',$content2,$cookies2); //正则匹配  
+        curl_close($ch);
+        print_r($content2);
+        echo "<br>";
+        print_r($cookies2);
+
     }
 
     public function grzx(){
