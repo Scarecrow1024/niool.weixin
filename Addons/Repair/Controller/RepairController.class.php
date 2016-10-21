@@ -53,6 +53,27 @@ class RepairController extends AddonsController{
     
     }
 
+    public function index2(){
+        $log_url="http://218.196.240.133/nqwx/index.jsp";
+        $log_post="username=311309010125&password=190031&Submit2=%B5%C7%C2%BD&ihide=yhide";
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$log_url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$log_post);
+        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($ch);
+        //正则匹配cookie并使用
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$cookies); //正则匹配  
+        curl_close($ch);
+        print_r($content);
+        echo "<br>";
+        print_r($cookies);
+    }
+
     public function grzx(){
         $openid=$_GET['openid'];
         $user=M('user');
