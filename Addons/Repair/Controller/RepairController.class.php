@@ -68,7 +68,9 @@ class RepairController extends AddonsController{
         $content=curl_exec($ch);
         //正则匹配cookie并使用
         preg_match_all('/Set-Cookie:(.*);/iU',$content,$cookies); //正则匹配  
+        $cookie1=$cookies[1][0];
         curl_close($ch);
+        
         /*print_r($content);
         echo "<br>";
         print_r($cookies);*/
@@ -78,6 +80,7 @@ class RepairController extends AddonsController{
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$repair_url);
         curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_COOKIE,"$cookie1");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
         curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=311309010125");
