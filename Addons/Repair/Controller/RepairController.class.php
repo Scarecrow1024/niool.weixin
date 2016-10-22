@@ -70,10 +70,6 @@ class RepairController extends AddonsController{
         preg_match_all('/Set-Cookie:(.*);/iU',$content,$cookies); //正则匹配  
         $cookie1=$cookies[1][0];
         curl_close($ch);
-        
-        /*print_r($content);
-        echo "<br>";
-        print_r($cookies);*/
 
         $post = "bxfws=26&bxqy=80&bxly=96&mphm=222&fjlx=-1&bxlx=0&bxnr=2&reporttime=2016-10-21%2C13%3A55%3A08&reporter=311309010125&reporttels=15639128888&content=%D4%DA%CF%DF%B1%A8%D0%DE%B2%E2%CA%D4%A3%AC%B2%BB%D3%C3%B9%FD%C0%B4&rstate=ystate";
         $repair_url = "http://218.196.240.133/nqwx/report.jsp"; 
@@ -95,6 +91,18 @@ class RepairController extends AddonsController{
         echo "<br>";
         print_r($cookies2);
 
+    }
+
+    public function nqdata(){
+        if($_GET['id']=='80'){
+            echo '[{"name":"1#","value":"92"},{"name":"2#","value":"93"},{"name":"3#","value":"94"},{"name":"4#","value":"95"},{"name":"5#","value":"96"},{"name":"6#","value":"97"},{"name":"2#研究生楼","value":"98"}]';
+        }elseif($_GET['id']=='33'){
+            echo '[{"name":"1#","value":"89"},{"name":"2#","value":"90"},{"name":"3#","value":"91"}]';
+        }elseif($_GET['id']=='32'){
+            echo '[{"name":"1#","value":"81"},{"name":"2#","value":"82"},{"name":"3#","value":"83"},{"name":"4#","value":"84"},{"name":"5#","value":"85"},{"name":"6#","value":"86"},{"name":"7#","value":"87"},{"name":"8#","value":"88"}]';
+        }elseif($_GET['id']=='99'){
+            echo '[{"name":"1#","value":"100"},{"name":"2#","value":"101"},{"name":"3#","value":"102"},{"name":"4#","value":"103"},{"name":"5#","value":"104"},{"name":"6#","value":"105"},{"name":"7#","value":"106"},{"name":"8#","value":"107"}]';
+        }
     }
 
     public function grzx(){
