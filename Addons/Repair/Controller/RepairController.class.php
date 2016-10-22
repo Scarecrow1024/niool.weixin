@@ -64,12 +64,6 @@ class RepairController extends AddonsController{
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
-        echo $mm;
-        echo "<br>";
-        echo $studentid;
-        die;
-        $studentid = '311309010125';
-        $mm = '190031';
         $log_url="http://218.196.240.133/nqwx/index.jsp";
         $log_post="username=".$studentid."&password=".$mm."&Submit2=%B5%C7%C2%BD&ihide=yhide";
         $ch=curl_init();
@@ -101,7 +95,11 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content2=curl_exec($ch);
         curl_close($ch);
-        print_r($content2);
+        if(strpos($content2,'200')){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public function nqdata(){
