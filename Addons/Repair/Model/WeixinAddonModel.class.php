@@ -11,13 +11,15 @@ class WeixinAddonModel extends WeixinModel {
 	function reply() { 
 		$url=addons_url ("Repair://Repair/index?openid=".get_openid());
 		$dataArr[0]=array(
-                'Title' => 'HPU小微报修',
-                'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=2353317323,517820738&fm=21&gp=0.jpg',
+            'Title' => 'HPU小微在线报修',
+            'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=2353317323,517820738&fm=21&gp=0.jpg',
+        );
+		$dataArr[0]=array(
+                'Title' => 'HPU小微水电报修',
                 'Url' => $url
             );
         $dataArr[1]=array(
-            'Title' => 'HPU小微报修',
-            'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=2353317323,517820738&fm=21&gp=0.jpg',
+            'Title' => 'HPU小微暖气报修',
             'Url' => addons_url ("Repair://Repair/index2?openid=".get_openid())
         );      
         $this->replyNews($dataArr);
