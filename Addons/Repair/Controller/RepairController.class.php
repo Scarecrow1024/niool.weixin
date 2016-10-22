@@ -54,6 +54,8 @@ class RepairController extends AddonsController{
     }
 
     public function index2(){
+        $this->display();
+        die;
         $log_url="http://218.196.240.133/nqwx/index.jsp";
         $log_post="username=311309010125&password=190031&Submit2=%B5%C7%C2%BD&ihide=yhide";
         $ch=curl_init();
