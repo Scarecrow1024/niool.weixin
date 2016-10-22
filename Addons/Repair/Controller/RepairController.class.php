@@ -91,7 +91,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_COOKIE,"$cookie1");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
-        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=".'123');
+        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=".$studentid);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
