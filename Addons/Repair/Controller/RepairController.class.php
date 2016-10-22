@@ -64,6 +64,8 @@ class RepairController extends AddonsController{
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 12, 6);
+        echo $mm;
+        die;
         $log_url="http://218.196.240.133/nqwx/index.jsp";
         $log_post="username=".$studentid."&password=".$mm."&Submit2=%B5%C7%C2%BD&ihide=yhide";
         $ch=curl_init();

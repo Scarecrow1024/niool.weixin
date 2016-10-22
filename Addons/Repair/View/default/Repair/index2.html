@@ -168,6 +168,7 @@ window.location.href="http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repai
         url:"__ROOT__/index.php?s=/addon/Repair/Repair/nqrepair",
         data:$('#formData').serialize(),
         success: function(data) {
+            alert(data);
             if(data == 1){
                 $("#submit").attr('disabled','disabled');
                 layer.alert('bingo！！报修成功,请不要重复报修', {
