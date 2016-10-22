@@ -97,8 +97,6 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content2=curl_exec($ch);
         curl_close($ch);
-        print_r($content2);
-        die;
         if(strpos($content2,'200')){
             return 1;
         }else{

@@ -168,8 +168,7 @@ window.location.href="http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repai
         url:"__ROOT__/index.php?s=/addon/Repair/Repair/nqrepair",
         data:$('#formData').serialize(),
         success: function(data) {
-            alert(data);
-            /*if(data == 1){
+            if(data == 1){
                 layer.alert('偶吧深蓝style', {
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
@@ -178,7 +177,7 @@ window.location.href="http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repai
                 $("#submit").attr('disabled','disabled');
             }else{
                 layer.msg('报修失败');
-            }*/
+            }
         }
     });
 }
