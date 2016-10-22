@@ -55,9 +55,19 @@ class RepairController extends AddonsController{
 
     public function index2(){
         $this->display();
-        die;
+    }
+
+    public function nqrepair(){
+        $openid=get_openid();
+        //先登陆
+        $user=M('user');
+        $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
+        $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
+        $mm = substr($IdCard, 11, 6);
+        $studentid = '311309010125';
+        $mm = '190031';
         $log_url="http://218.196.240.133/nqwx/index.jsp";
-        $log_post="username=311309010125&password=190031&Submit2=%B5%C7%C2%BD&ihide=yhide";
+        $log_post="username=".$studentid."&password=".$mm."&Submit2=%B5%C7%C2%BD&ihide=yhide";
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$log_url);
         curl_setopt($ch,CURLOPT_POST,1);
@@ -73,7 +83,7 @@ class RepairController extends AddonsController{
         $cookie1=$cookies[1][0];
         curl_close($ch);
 
-        $post = "bxfws=26&bxqy=80&bxly=96&mphm=222&fjlx=-1&bxlx=0&bxnr=2&reporttime=2016-10-21%2C13%3A55%3A08&reporter=311309010125&reporttels=15639128888&content=%D4%DA%CF%DF%B1%A8%D0%DE%B2%E2%CA%D4%A3%AC%B2%BB%D3%C3%B9%FD%C0%B4&rstate=ystate";
+        $post = "bxfws=".$_POST['bxfws']."&bxqy=".$_POST['bxqy']."&bxly=".$_POST['bxly']."&mphm=".$_POST['mphm']."&fjlx=".$_POST['fjlx']."&bxlx=".$_POST['bxlx']."&bxnr=".$_POST['bxnr']."&reporttime=".$_POST['reporttime']."&reporter=HPU小微&reporttels=".$_POST['reporttels']."&content=".$_POST['content']."&rstate=ystate";
         $repair_url = "http://218.196.240.133/nqwx/report.jsp"; 
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$repair_url);
@@ -81,7 +91,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_COOKIE,"$cookie1");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
-        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=311309010125");
+        curl_setopt($ch,CURLOPT_REFERER,"http://218.196.240.133/nqwx/report.jsp?user=".$studentid);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -92,11 +102,6 @@ class RepairController extends AddonsController{
         print_r($content2);
         echo "<br>";
         print_r($cookies2);
-
-    }
-
-    public function nqrepair(){
-        print_r($_POST);
     }
 
     public function nqdata(){
