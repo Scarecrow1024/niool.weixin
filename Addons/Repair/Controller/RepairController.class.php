@@ -95,6 +95,10 @@ class RepairController extends AddonsController{
 
     }
 
+    public function nqrepair(){
+        print_r($_POST);
+    }
+
     public function nqdata(){
         if($_GET['id']=='80'){
             echo '[{"name":"1#","value":"92"},{"name":"2#","value":"93"},{"name":"3#","value":"94"},{"name":"4#","value":"95"},{"name":"5#","value":"96"},{"name":"6#","value":"97"},{"name":"2#研究生楼","value":"98"}]';
