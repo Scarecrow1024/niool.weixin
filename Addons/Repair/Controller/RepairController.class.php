@@ -58,14 +58,12 @@ class RepairController extends AddonsController{
     }
 
     public function nqrepair(){
-        /*$openid=get_openid();
+        $openid=get_openid();
         //先登陆
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
-        $mm = substr($IdCard, 11, 6);*/
-        $studentid = '311309010125';
-        $mm = '190031';
+        $mm = substr($IdCard, 11, 6);
         $log_url="http://218.196.240.133/nqwx/index.jsp";
         $log_post="username=".$studentid."&password=".$mm."&Submit2=%B5%C7%C2%BD&ihide=yhide";
         $ch=curl_init();
