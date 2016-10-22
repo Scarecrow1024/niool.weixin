@@ -161,14 +161,14 @@ window.location.href="http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repai
         document.formData.reporttels.focus();
         return;
     }
-    /*$.ajax({
+    $.ajax({
         type:"POST",
-        url:"http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repair/Repair/nqrepair.html",
+        url:"__ROOT__/index.php?s=/addon/Repair/Repair/nqrepair",
         data:$('#formData').serialize(),
         success: function(data) {
         alert(data);
     }
-    });*/
+    });
 }
 function trim(str){ //删除左右两端的空格
 return str.replace(/(^\s*)|(\s*$)/g, "");
