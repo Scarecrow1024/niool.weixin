@@ -122,7 +122,7 @@ $(function(){
         if($("#bxqy").val()!="0") {
             $("#bxly").append("<option value='0'>请选择</option>");
             var id = $("#bxqy").val();
-            jQuery.getJSON("{:U('nqdata/id/')}"+id,"",function(data){
+            jQuery.getJSON("__ROOT__/index.php?s=/addon/Repair/Repair/nqdata/id/"+id,"",function(data){
                 for(var j=0;j<data.length;j++) {
                     $("#bxly").append("<option value='"+data[j].value+"'>"+data[j].name+"</option>");
                 }
