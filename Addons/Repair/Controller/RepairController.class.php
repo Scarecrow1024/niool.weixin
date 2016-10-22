@@ -98,9 +98,9 @@ class RepairController extends AddonsController{
         $content2=curl_exec($ch);
         curl_close($ch);
         if(strpos($content2,'200')){
-            return 1;
+            echo '1';
         }else{
-            return 0;
+            echo '0';
         }
     }
 
