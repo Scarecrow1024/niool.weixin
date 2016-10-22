@@ -169,14 +169,14 @@ window.location.href="http://www.hequanxi.com/ifreehand/index.php?s=/addon/Repai
         data:$('#formData').serialize(),
         success: function(data) {
             if(data == 1){
-                layer.alert('偶吧深蓝style', {
+                $("#submit").attr('disabled','disabled');
+                layer.alert('bingo！！报修成功,请不要重复报修', {
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                     ,shift: 4 //动画类型
                   });
-                $("#submit").attr('disabled','disabled');
             }else{
-                layer.msg('报修失败');
+                layer.msg('报修失败,请更换账号或等会再报修');
             }
         }
     });
