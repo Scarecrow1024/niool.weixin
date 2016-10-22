@@ -81,7 +81,7 @@ class RepairController extends AddonsController{
         $cookie1=$cookies[1][0];
         curl_close($ch);
 
-        $post = "bxfws=".$_POST['bxfws']."&bxqy=".$_POST['bxqy']."&bxly=".$_POST['bxly']."&mphm=".$_POST['mphm']."&fjlx=".$_POST['fjlx']."&bxlx=".$_POST['bxlx']."&bxnr=".$_POST['bxnr']."&reporttime=".$_POST['reporttime']."&reporter=HPU小微&reporttels=".$_POST['reporttels']."&content=".iconv('utf-8','gbk',$_POST['content'])."&rstate=ystate";
+        $post = "bxfws=".$_POST['bxfws']."&bxqy=".$_POST['bxqy']."&bxly=".$_POST['bxly']."&mphm=".$_POST['mphm']."&fjlx=".$_POST['fjlx']."&bxlx=".$_POST['bxlx']."&bxnr=".$_POST['bxnr']."&reporttime=".$_POST['reporttime']."&reporter=".$_POST['reporter']."&reporttels=".$_POST['reporttels']."&content=".iconv('utf-8','gbk',$_POST['content'])."&rstate=ystate";
         $repair_url = "http://218.196.240.133/nqwx/report.jsp"; 
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$repair_url);
@@ -94,6 +94,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content2=curl_exec($ch);
+        return $content2;
         curl_close($ch);
         if(strpos($content2,'200')){
             return 1;
