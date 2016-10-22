@@ -64,6 +64,10 @@ class RepairController extends AddonsController{
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
+        echo $mm;
+        echo "<br>";
+        echo $studentid;
+        die;
         $studentid = '311309010125';
         $mm = '190031';
         $log_url="http://218.196.240.133/nqwx/index.jsp";
@@ -96,12 +100,8 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content2=curl_exec($ch);
-        //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content2,$cookies2); //正则匹配  
         curl_close($ch);
         print_r($content2);
-        echo "<br>";
-        print_r($cookies2);
     }
 
     public function nqdata(){

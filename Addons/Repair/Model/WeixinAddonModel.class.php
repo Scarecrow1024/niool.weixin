@@ -14,7 +14,12 @@ class WeixinAddonModel extends WeixinModel {
                 'Title' => 'HPU小微报修',
                 'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=2353317323,517820738&fm=21&gp=0.jpg',
                 'Url' => $url
-            );    
+            );
+        $dataArr[1]=array(
+            'Title' => 'HPU小微报修',
+            'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=2353317323,517820738&fm=21&gp=0.jpg',
+            'Url' => addons_url ("Repair://Repair/index2?openid=".get_openid())
+        );      
         $this->replyNews($dataArr);
 	}
 	
