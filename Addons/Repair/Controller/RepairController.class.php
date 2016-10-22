@@ -58,7 +58,7 @@ class RepairController extends AddonsController{
     }
 
     public function nqrepair(){
-        $openid=$_GET['openid'];
+        $openid=get_openid();
         //先登陆
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
