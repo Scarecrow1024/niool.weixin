@@ -135,6 +135,7 @@ class BindingController extends AddonsController{
     public function verify1(){
         $data = $this->get_info();
         echo $data[0]['studentid'];
+        echo substr($data[0]['IdCard'],12);
     }
 
     //递归获取账号密码
