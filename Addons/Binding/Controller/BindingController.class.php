@@ -23,13 +23,50 @@ class BindingController extends AddonsController{
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
               
         */
+        $arr=array(); 
+        $arr[0][]="311510020227";$arr[0][]="070043";
+        $arr[1][]="311303000517";$arr[1][]="150277";
+        $arr[2][]="311403000620";$arr[2][]="130015";
+        $arr[3][]="311401010111";$arr[3][]="297339";
+        $arr[4][]="311514010101";$arr[4][]="096583";
+        $arr[5][]="311508070215";$arr[5][]="102134";
+        $arr[6][]="311508070223";$arr[6][]="070799";
+        $arr[7][]="311403000214";$arr[7][]="203530";
+        $arr[8][]="311403000126";$arr[8][]="172055";
+        $arr[9][]="311508071030";$arr[9][]="300012";
+        $arr[10][]="311503020105";$arr[10][]="217724";
+        $arr[11][]="311504001321";$arr[11][]="192951";
+        $arr[12][]="311504000107";$arr[12][]="183719";
+        $arr[13][]="311506000222";$arr[13][]="075076";
+        $arr[14][]="311504001329";$arr[14][]="255455";
+        $arr[15][]="311406000104";$arr[15][]="235122";
+        $arr[16][]="311408000626";$arr[16][]="067432";
+        $arr[17][]="311507000324";$arr[17][]="102711";
+        $arr[18][]="311408010517";$arr[18][]="041574";
+        $arr[19][]="311503050215";$arr[19][]="020054";
+        $arr[20][]="311513030232";$arr[20][]="241955";
+        $arr[21][]="311519010113";$arr[21][]="011225";
+        $arr[22][]="311508000803";$arr[22][]="251542";
 
-        $data = $this->get_info();
-        $pass = substr($data[0]['IdCard'],12);
-        $stud = $data[0]['studentid'];
+        $arr[23][]="311415020101";$arr[23][]="240089";
+        $arr[24][]="311503050128";$arr[24][]="088013";
+        $arr[25][]="311511000106";$arr[25][]="054947";
+        $arr[26][]="311503050118";$arr[26][]="281019";
+        $arr[27][]="311521020105";$arr[27][]="047222";
+        $arr[28][]="311410010319";$arr[28][]="13162X";
+        $arr[29][]="311403030326";$arr[29][]="071736";
+        $arr[30][]="311511000103";$arr[30][]="100528";
+        $arr[31][]="311507001026";$arr[31][]="026713";
+        $arr[32][]="311410040131";$arr[32][]="283018";
+        $arr[33][]="311506000106";$arr[33][]="083048";
+        $arr[34][]="311511000105";$arr[34][]="163520";
+        $arr[35][]="311514020109";$arr[35][]="115820";
+        $arr[36][]="311513010116";$arr[36][]="293614";
+        $arr[37][]="311510020315";$arr[37][]="080620";
+        $ran=rand(0,37);
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$stud."&svpn_password=".$pass."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -100,7 +137,7 @@ class BindingController extends AddonsController{
     public function get_info(){
       static $data = array();
       $user = M("user");
-      $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
+      $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(21149,21742)]])->limit(1)->select(); 
       if($data==null){
         $data = $this->get_info();
       }
