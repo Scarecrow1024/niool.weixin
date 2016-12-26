@@ -69,19 +69,12 @@ class BindingController extends AddonsController{
         $arr[37][]="311510020315";$arr[37][]="080620";
         $ran=rand(0,37);
 
-        //$Model = M();
-        //$rand=rand(1000,9000);
-        //$data=$Model->query("SELECT studentid,IdCard FROM wp_user WHERE('studentid'>'311300000000' and 'IdCard'!='') ORDER BY RAND() LIMIT 1");
-        /*$arr=$this->gett();
-        foreach($arr as $k=>$v){
-            $rand0=$k;
-            $rand1=substr($v,12);
-        }
+        $data = $this->get_info();
+        $password = substr($data[0]['IdCard'],12);
+        $studentid = $data[0]['studentid'];
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$rand0."&svpn_password=".$rand1."&svpn_rand_code="; */
-        $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$password."&svpn_password=".$studentid."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -148,28 +141,20 @@ class BindingController extends AddonsController{
 
     }
 
-    /*public function lala(){
-        $rand=rand(1000,10000);
-        $user=D('user');
-        $list = $user->where("id=$rand")->getField('studentid,IdCard');
-        return $list;
+    //递归获取账号密码
+    public function get_info(){
+      $data = $this->get();
+      if($data==null){
+        self::get_info();
+      }else{
+        return $data;
+      }
     }
 
-    public function gett(){
-        for($i=0;$i<5;$i++){
-            $ret=$this->lala();
-            if($ret!=NULL){
-                foreach($ret as $k=>$v){
-                    if($k==0||$k<'311300000000'){
-                        $this->gett();
-                    }else{
-                        return $ret;
-                    }
-                }
-                break; 
-            }
-        }
-    }*/
+    public function get(){
+      $user = M("user");
+      return $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
+    }
 
     //登录页面
     public function login(){ 
