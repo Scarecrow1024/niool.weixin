@@ -100,9 +100,9 @@ class BindingController extends AddonsController{
     public function get_info(){
       static $data = array();
       $user = M("user");
-      $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(21149,21742)]])->limit(1)->select(); 
+      $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
       if($data==null){
-        $data = $this->demo();
+        $data = $this->get_info();
       }
       return $data;
     }
