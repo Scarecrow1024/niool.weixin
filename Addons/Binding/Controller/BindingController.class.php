@@ -132,12 +132,16 @@ class BindingController extends AddonsController{
         echo $content;
 
     }
+    public function verify1(){
+        $data = $this->get_info();
+        echo $data[0]['studentid'];
+    }
 
     //递归获取账号密码
     public function get_info(){
       static $data = array();
       $user = M("user");
-      $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(21149,21742)]])->limit(1)->select(); 
+      $data = $user->field('IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
       if($data==null){
         $data = $this->get_info();
       }
