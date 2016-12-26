@@ -69,12 +69,12 @@ class BindingController extends AddonsController{
         $arr[37][]="311510020315";$arr[37][]="080620";
         $ran=rand(0,37);
 
-        $data = $this->get_info();
+        /*$data = $this->get_info();
         $password = substr($data[0]['IdCard'],12);
-        $studentid = $data[0]['studentid'];
+        $studentid = $data[0]['studentid'];*/
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$password."&svpn_password=".$studentid."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
