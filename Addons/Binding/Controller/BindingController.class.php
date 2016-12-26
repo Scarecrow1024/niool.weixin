@@ -7,137 +7,132 @@ class BindingController extends AddonsController{
     //登录vpn获取验证码并且保存cookie设置标记
     public function verify(){
         set_time_limit(0);
-        $ch=curl_init();
-        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $content=curl_exec($ch);
-        //正则匹配cookie并使用
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
-        $session = trim($str[1]); //获得COOKIE（SESSIONID）
-        //$arr=explode("=", $session);
-        //print_r($arr);
-        //setcookie($arr[0],$arr[1]);
-        //curl_setopt($ch,CURLOPT_COOKIE,$session);
-        curl_close($ch);
-        //echo $content."<br>";
-        /*
-            登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
-              
-        */
-        $arr=array(); 
-        $arr[0][]="311510020227";$arr[0][]="070043";
-        $arr[1][]="311303000517";$arr[1][]="150277";
-        $arr[2][]="311403000620";$arr[2][]="130015";
-        $arr[3][]="311401010111";$arr[3][]="297339";
-        $arr[4][]="311514010101";$arr[4][]="096583";
-        $arr[5][]="311508070215";$arr[5][]="102134";
-        $arr[6][]="311508070223";$arr[6][]="070799";
-        $arr[7][]="311403000214";$arr[7][]="203530";
-        $arr[8][]="311403000126";$arr[8][]="172055";
-        $arr[9][]="311508071030";$arr[9][]="300012";
-        $arr[10][]="311503020105";$arr[10][]="217724";
-        $arr[11][]="311504001321";$arr[11][]="192951";
-        $arr[12][]="311504000107";$arr[12][]="183719";
-        $arr[13][]="311506000222";$arr[13][]="075076";
-        $arr[14][]="311504001329";$arr[14][]="255455";
-        $arr[15][]="311406000104";$arr[15][]="235122";
-        $arr[16][]="311408000626";$arr[16][]="067432";
-        $arr[17][]="311507000324";$arr[17][]="102711";
-        $arr[18][]="311408010517";$arr[18][]="041574";
-        $arr[19][]="311503050215";$arr[19][]="020054";
-        $arr[20][]="311513030232";$arr[20][]="241955";
-        $arr[21][]="311519010113";$arr[21][]="011225";
-        $arr[22][]="311508000803";$arr[22][]="251542";
 
-        $arr[23][]="311415020101";$arr[23][]="240089";
-        $arr[24][]="311503050128";$arr[24][]="088013";
-        $arr[25][]="311511000106";$arr[25][]="054947";
-        $arr[26][]="311503050118";$arr[26][]="281019";
-        $arr[27][]="311521020105";$arr[27][]="047222";
-        $arr[28][]="311410010319";$arr[28][]="13162X";
-        $arr[29][]="311403030326";$arr[29][]="071736";
-        $arr[30][]="311511000103";$arr[30][]="100528";
-        $arr[31][]="311507001026";$arr[31][]="026713";
-        $arr[32][]="311410040131";$arr[32][]="283018";
-        $arr[33][]="311506000106";$arr[33][]="083048";
-        $arr[34][]="311511000105";$arr[34][]="163520";
-        $arr[35][]="311514020109";$arr[35][]="115820";
-        $arr[36][]="311513010116";$arr[36][]="293614";
-        $arr[37][]="311510020315";$arr[37][]="080620";
-        $ran=rand(0,37);
+        $user = M("user");
+        $data = $user->field('id,IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(21149,21742)]])->limit(1)->select(); 
+        if($data==null){
+            $data = $this->verify();
+        }else{
+            $pass = substr($data[0]['IdCard'],12);
+            $stud = $data[0]['studentid'];
+            $ch=curl_init();
+            curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+            curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            $content=curl_exec($ch);
+            //正则匹配cookie并使用
+            preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+            $session = trim($str[1]); //获得COOKIE（SESSIONID）
+            curl_close($ch);
 
-        /*$data = $this->get_info();
-        $password = substr($data[0]['IdCard'],12);
-        $studentid = $data[0]['studentid'];*/
+            /*
+                登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
+                  
+            */
+            /*$arr=array(); 
+            $arr[0][]="311510020227";$arr[0][]="070043";
+            $arr[1][]="311303000517";$arr[1][]="150277";
+            $arr[2][]="311403000620";$arr[2][]="130015";
+            $arr[3][]="311401010111";$arr[3][]="297339";
+            $arr[4][]="311514010101";$arr[4][]="096583";
+            $arr[5][]="311508070215";$arr[5][]="102134";
+            $arr[6][]="311508070223";$arr[6][]="070799";
+            $arr[7][]="311403000214";$arr[7][]="203530";
+            $arr[8][]="311403000126";$arr[8][]="172055";
+            $arr[9][]="311508071030";$arr[9][]="300012";
+            $arr[10][]="311503020105";$arr[10][]="217724";
+            $arr[11][]="311504001321";$arr[11][]="192951";
+            $arr[12][]="311504000107";$arr[12][]="183719";
+            $arr[13][]="311506000222";$arr[13][]="075076";
+            $arr[14][]="311504001329";$arr[14][]="255455";
+            $arr[15][]="311406000104";$arr[15][]="235122";
+            $arr[16][]="311408000626";$arr[16][]="067432";
+            $arr[17][]="311507000324";$arr[17][]="102711";
+            $arr[18][]="311408010517";$arr[18][]="041574";
+            $arr[19][]="311503050215";$arr[19][]="020054";
+            $arr[20][]="311513030232";$arr[20][]="241955";
+            $arr[21][]="311519010113";$arr[21][]="011225";
+            $arr[22][]="311508000803";$arr[22][]="251542";
 
-        $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
-        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        //带上上登陆前的cookie
-        curl_setopt($ch,CURLOPT_COOKIE,$session);
-        curl_setopt($ch,CURLOPT_POST,1);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        $content=curl_exec($ch);
-        //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
-        $session2=trim($str1[1][0]);
-        $session3=trim($str1[1][1]);
-        curl_setopt($ch, CURLOPT_COOKIE, "$session2;$session3");
-        $arr3=explode("=", $session3);
-        $arr2=explode("=", $session2);
-        curl_close($ch);
-        //登录教务处
-        $ch=curl_init();
-        set_time_limit(0);
-        $url="https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        //curl_setopt($ch,CURLOPT_COOKIEFILE, $sessionFile);
-        //使用vpn登陆后的cookie
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3"); 
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $content=curl_exec($ch);
-        //正则匹配教务处登陆时设置的cookie
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
-        $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
-        $arr4=explode("=", $session4);
-        //global $arr4; 
-        //curl_setopt($ch, CURLOPT_COOKIE, $session4);
-        //setcookie($arr4[0],$arr4[1]);
-        curl_close($ch);
+            $arr[23][]="311415020101";$arr[23][]="240089";
+            $arr[24][]="311503050128";$arr[24][]="088013";
+            $arr[25][]="311511000106";$arr[25][]="054947";
+            $arr[26][]="311503050118";$arr[26][]="281019";
+            $arr[27][]="311521020105";$arr[27][]="047222";
+            $arr[28][]="311410010319";$arr[28][]="13162X";
+            $arr[29][]="311403030326";$arr[29][]="071736";
+            $arr[30][]="311511000103";$arr[30][]="100528";
+            $arr[31][]="311507001026";$arr[31][]="026713";
+            $arr[32][]="311410040131";$arr[32][]="283018";
+            $arr[33][]="311506000106";$arr[33][]="083048";
+            $arr[34][]="311511000105";$arr[34][]="163520";
+            $arr[35][]="311514020109";$arr[35][]="115820";
+            $arr[36][]="311513010116";$arr[36][]="293614";
+            $arr[37][]="311510020315";$arr[37][]="080620";
+            $ran=rand(0,37);*/
 
-        //获取验证码
-        $ch=curl_init();
-        $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
-        setcookie("isl","1");
-        setcookie($arr2[0],$arr2[1]);
-        setcookie($arr3[0],$arr3[1]);
-        setcookie($arr4[0],$arr4[1]);
-        //print_r($_COOKIE);
-        //curl_setopt($ch,CURLOPT_COOKIE,$session2); 
-        //curl_setopt($ch,CURLOPT_COOKIEFILE,$sessionFile);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $content=curl_exec($ch);
-        curl_close($ch);
-        echo $content;
+            $ch=curl_init();
+            $post="mitm_result=&svpn_name=".$stud."&svpn_password=".$pass."&svpn_rand_code=";
+            curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
+            curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+            curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+            //带上上登陆前的cookie
+            curl_setopt($ch,CURLOPT_COOKIE,$session);
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            $content=curl_exec($ch);
+            //正则匹配cookie并使用
+            preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
+            $session2=trim($str1[1][0]);
+            $session3=trim($str1[1][1]);
+            curl_setopt($ch, CURLOPT_COOKIE, "$session2;$session3");
+            $arr3=explode("=", $session3);
+            $arr2=explode("=", $session2);
+            curl_close($ch);
+            //登录教务处
+            $ch=curl_init();
+            set_time_limit(0);
+            $url="https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/";
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+            curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+            curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+            //curl_setopt($ch,CURLOPT_COOKIEFILE, $sessionFile);
+            //使用vpn登陆后的cookie
+            curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3"); 
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            $content=curl_exec($ch);
+            //正则匹配教务处登陆时设置的cookie
+            preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+            $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
+            $arr4=explode("=", $session4);
+            curl_close($ch);
+
+            //获取验证码
+            $ch=curl_init();
+            $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+            curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+            curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+            curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
+            setcookie("isl","1");
+            setcookie($arr2[0],$arr2[1]);
+            setcookie($arr3[0],$arr3[1]);
+            setcookie($arr4[0],$arr4[1]);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            $content=curl_exec($ch);
+            curl_close($ch);
+            echo $content;
+        } 
 
     }
 
