@@ -65,8 +65,12 @@ class BindingController extends AddonsController{
         $arr[37][]="311510020315";$arr[37][]="080620";
         $ran=rand(0,37);
 
+        $info = $this->get_info();
+        $stud = $info[0]['studentid'];
+        $pass = substr($info[0]['IdCard'],12);
+
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$stud."&svpn_password=".$pass."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -142,7 +146,7 @@ class BindingController extends AddonsController{
     public function get_info(){
       static $data = array();
       $user = M("user");
-      $data = $user->field('IdCard,studentid')->where(['studentid'=>['gt',0],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
+      $data = $user->field('IdCard,studentid')->where(['studentid'=>['gt',311300000000],'id'=>['eq',rand(10000,20000)]])->limit(1)->select(); 
       if($data==null){
         $data = $this->get_info();
       }
