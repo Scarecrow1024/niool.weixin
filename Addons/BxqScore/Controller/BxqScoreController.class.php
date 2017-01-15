@@ -306,6 +306,7 @@ class BxqScoreController extends AddonsController{
             } 
         }
         $con=count($data['kcm']);
+        echo $con;
         //print_r($arr)."<br>";
         $this->assign('data',$data);
         $this->assign('con',$con);
