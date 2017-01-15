@@ -151,6 +151,7 @@ class BxqScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
+        echo $logout;
 
         /*$xmlstr=$content;
         $openid=get_openid();
