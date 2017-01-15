@@ -306,7 +306,10 @@ class BxqScoreController extends AddonsController{
             } 
         }
         $con=count($data['kcm']);
-        echo $con;
+        if($con==0){
+            echo "vpn已达到最大限制人数,请返回刷新验证码并重新登录";
+            die;
+        }
         //print_r($arr)."<br>";
         $this->assign('data',$data);
         $this->assign('con',$con);
