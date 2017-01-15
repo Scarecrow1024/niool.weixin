@@ -56,7 +56,13 @@ class BxqScoreController extends AddonsController{
         $arr[54][]="311506000628";$arr[54][]="28661X";$arr[55][]="311506000324";$arr[55][]="145316";
         $arr[56][]="311506000412";$arr[56][]="181526";$arr[57][]="311506000522";$arr[57][]="121599";
         $arr[58][]="311506000604";$arr[58][]="266784";$arr[59][]="311506000310";$arr[59][]="282586";
-        $ran=rand(0,59);
+        $arr[60][]="311506000624";$arr[60][]="120610";$arr[67][]="311506000510";$arr[67][]="056522";
+        $arr[61][]="311506000514";$arr[61][]="312561";$arr[68][]="311506000627";$arr[68][]="253359";
+        $arr[62][]="311506000330";$arr[62][]="02389X";$arr[69][]="311506000618";$arr[69][]="043512";
+        $arr[63][]="311506000523";$arr[63][]="29243X";$arr[70][]="311502030329";$arr[70][]="225014";
+        $arr[64][]="311502030327";$arr[64][]="290314";$arr[71][]="311506000322";$arr[71][]="125012";
+        $arr[65][]="311507001211";$arr[65][]="064130";$arr[72][]="311506000321";$arr[72][]="29455X";
+        $ran=rand(0,72);
         //$Model = M();
         //$rand=rand(1000,9000);
         //$data=$Model->query("SELECT studentid,IdCard FROM wp_user WHERE('studentid'>'311300000000' and 'IdCard'!='') ORDER BY RAND() LIMIT 1");
@@ -320,7 +326,7 @@ class BxqScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        
+
         setcookie("isl",null);
         setcookie($cookie2,null);
         setcookie($cookie3,null);
