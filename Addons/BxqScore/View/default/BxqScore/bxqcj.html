@@ -41,6 +41,12 @@ if (typeof WeixinJSBridge == "undefined"){
     footer{background-color:#BCD2EE;color:#666;position: fixed;bottom: 0px;width: 100%;padding: 10px;text-align: center;}
   </style>
   <body class="animated rollIn">
+  <?php 
+      if($con==0){
+          echo "<h2>你所在的用户组已达到最大限制人数,请<strong>返回刷新验证码并重新查询</strong></h2>";
+          die;
+      }
+  ?>
         <table style="width: 100%;text-align: center;" class="table table-striped table-bordered table-hover" >
               <tr>
                 <th style="text-align: center;width: 30%;">课程名称</th>

@@ -306,10 +306,6 @@ class BxqScoreController extends AddonsController{
             } 
         }
         $con=count($data['kcm']);
-        if($con==0){
-            echo "<h2>你所在的用户组已达到最大限制人数,请<strong>返回刷新验证码并重新查询</strong></h2>";
-            die;
-        }
         //print_r($arr)."<br>";
         $this->assign('data',$data);
         $this->assign('con',$con);
