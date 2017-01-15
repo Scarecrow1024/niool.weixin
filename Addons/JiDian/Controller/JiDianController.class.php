@@ -431,6 +431,24 @@ class JiDianController extends AddonsController{
         $this->assign("h1",$h1);
         $this->assign("h2",$h2);
         $this->assign("h3",$h3);
+
+        //退出
+        $ch=curl_init();
+        $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4"); 
+        setcookie("isl","0");
+        setcookie("TWFID","deleted");
+        setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
+        setcookie("path","/");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $logout=curl_exec($ch);
+        curl_close($ch);
+
         setcookie("isl",null);
         setcookie($cookie2,null);
         setcookie($cookie3,null);
