@@ -136,7 +136,7 @@ class BindingController extends AddonsController{
         echo $content;
 
     }
-    
+
     public function verify1(){
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
@@ -192,12 +192,12 @@ class BindingController extends AddonsController{
         preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
         $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
         curl_close($ch);
-
+        echo $stud."&nbsp".$pass."<br>";
         //获取验证码
         $ch=curl_init();
         $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
         curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
