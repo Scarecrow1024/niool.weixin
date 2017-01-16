@@ -26,7 +26,7 @@ class JiDianController extends AddonsController{
         /*
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
         */
-        /*$arr=array(); 
+        $arr=array(); 
         $arr[0][]="311408000107";
         $arr[0][]="155506";
         $arr[1][]="311502020328";
@@ -49,16 +49,15 @@ class JiDianController extends AddonsController{
         $arr[9][]="300012";
         $arr[10][]="311503020105";
         $arr[10][]="217724";
-        $ran=rand(0,10);*/
-        $arr=$this->gett();
+        $ran=rand(0,10);
+        /*$arr=$this->gett();
         foreach($arr as $k=>$v){
             $rand0=$k;
             $rand1=substr($v,12);
-        }
+        }*/
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$rand0."&svpn_password=".$rand1."&svpn_rand_code="; 
-        
+        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code="; 
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -121,7 +120,7 @@ class JiDianController extends AddonsController{
         $content=curl_exec($ch);
         curl_close($ch);
         echo $content;
-        $xmlstr=$content;
+        /*$xmlstr=$content;
         $openid=get_openid();
         if($openid=='-1'){
             $img_id='default'; 
@@ -135,7 +134,7 @@ class JiDianController extends AddonsController{
         $jpg = $xmlstr;//得到post过来的二进制原始数据
         $file = fopen("Verify/".$filename,"w");//打开文件准备写入
         fwrite($file,$jpg);//写入
-        fclose($file);//关闭*/
+        fclose($file);//关闭*/*/
 
     }
 
@@ -207,6 +206,7 @@ class JiDianController extends AddonsController{
     }
 
     public function jidian(){  
+        session_start();
         /*$ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"http://lab.ocrking.com/");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -219,7 +219,9 @@ class JiDianController extends AddonsController{
         preg_match_all('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
         $cookie_1 = trim($str[1][0]);
         $cookie_2 = trim($str[1][1]);*/
-        $ch=curl_init();
+        //
+        //自动识别
+        /*$ch=curl_init();
         $openid=get_openid();
         if($openid=='-1'){
             $img_id='default'; 
@@ -241,7 +243,7 @@ class JiDianController extends AddonsController{
         $content1=curl_exec($ch);
         curl_close ($ch);
         preg_match("/<result>(.*?)<\/result>/si", $content1,$str1);
-        $verify=$str1[1];
+        $verify=$str1[1];*/
         //header("charset=utf-8");
 
         if(isset($_COOKIE['isl'])){
@@ -256,13 +258,13 @@ class JiDianController extends AddonsController{
             $openid=$_POST['openid'];
             $zjh=$_POST['zjh'];
             $mm=$_POST['mm'];
-            //$v_yzm=$_POST['v_yzm'];
+            $v_yzm=$_POST['v_yzm'];
         }
 
         $params = array (
             'zjh' => $zjh,
             'mm' => $mm,
-            'v_yzm' => $verify 
+            'v_yzm' => $v_yzm 
             ); 
 
         $ch = curl_init ();
@@ -448,6 +450,24 @@ class JiDianController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
+
+        //退出
+        $ch=curl_init();
+        $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4"); 
+        setcookie("isl","0");
+        setcookie("TWFID","deleted");
+        setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
+        setcookie("path","/");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $logout=curl_exec($ch);
+        curl_close($ch);
+        session_destroy();
 
         setcookie("isl",null);
         setcookie($cookie2,null);
