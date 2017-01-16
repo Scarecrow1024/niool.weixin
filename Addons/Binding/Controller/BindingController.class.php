@@ -218,7 +218,6 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
-        setcookie("isl","0");
         setcookie("TWFID","deleted");
         setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
         setcookie("path","/");

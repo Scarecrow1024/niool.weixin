@@ -43,8 +43,7 @@ if (typeof WeixinJSBridge == "undefined"){
   <body class="animated rollIn">
   <?php 
       if($con==0){
-          echo "<h2>你所在的用户组已达到最大限制人数,请<strong>返回刷新验证码并重新查询</strong></h2>";
-          die;
+          echo "<img src="https://blog.niool.com/weixin/Verify/error.png" alt="">";
       }
   ?>
         <table style="width: 100%;text-align: center;" class="table table-striped table-bordered table-hover" >
