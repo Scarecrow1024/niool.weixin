@@ -70,7 +70,7 @@ class BindingController extends AddonsController{
         $pass = substr($info[0]['IdCard'],12);
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$stud."&svpn_password=".$pass."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
