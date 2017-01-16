@@ -357,11 +357,7 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        
-        setcookie("isl",null);
-        setcookie($session2,null);
-        setcookie($session3,null);
-        setcookie($session4,null);
+        session_destroy()
     }
 
     // 关注公众号事件
