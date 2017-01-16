@@ -136,7 +136,6 @@ class BindingController extends AddonsController{
         echo $content;
 
     }
-
     public function verify1(){
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
@@ -192,12 +191,12 @@ class BindingController extends AddonsController{
         preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
         $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
         curl_close($ch);
-        echo $stud."&nbsp".$pass."<br>";
+
         //获取验证码
         $ch=curl_init();
         $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
         curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -206,24 +205,6 @@ class BindingController extends AddonsController{
         $content=curl_exec($ch);
         curl_close($ch);
         echo $content;
-
-        //退出
-        $ch=curl_init();
-        $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
-        setcookie("isl","0");
-        setcookie("TWFID","deleted");
-        setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
-        setcookie("path","/");
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $logout=curl_exec($ch);
-        curl_close($ch);
-        session_destroy()
 
         /*$data = $this->get_info();
         echo $data[0]['studentid']."<br>";
@@ -375,7 +356,11 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        session_destroy()
+        
+        setcookie("isl",null);
+        setcookie($session2,null);
+        setcookie($session3,null);
+        setcookie($session4,null);
     }
 
     // 关注公众号事件
