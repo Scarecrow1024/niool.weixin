@@ -134,7 +134,7 @@ class JiDianController extends AddonsController{
         $jpg = $xmlstr;//得到post过来的二进制原始数据
         $file = fopen("Verify/".$filename,"w");//打开文件准备写入
         fwrite($file,$jpg);//写入
-        fclose($file);//关闭*/*/
+        fclose($file);//关闭*/
 
     }
 
