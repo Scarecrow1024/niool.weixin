@@ -193,8 +193,8 @@ class BindingController extends AddonsController{
         $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
         curl_close($ch);
 
-        echo $stud."#".$pass."<br>";
-        
+        //echo $stud."#".$pass."<br>";
+
         //获取验证码
         $ch=curl_init();
         $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
