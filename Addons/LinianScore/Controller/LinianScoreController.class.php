@@ -137,7 +137,6 @@ class LinianScoreController extends AddonsController{
 
     //本学期成绩
     public function index(){
-        session_start();
         if(isset($_COOKIE['isl'])){
             $cookie4="websvr_cookie"."=".$_COOKIE['websvr_cookie'];
             $cookie2="ENABLE_RANDCODE"."=".$_COOKIE['ENABLE_RANDCODE'];
@@ -256,7 +255,6 @@ class LinianScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        session_destroy();
         $this->display();
     }
 

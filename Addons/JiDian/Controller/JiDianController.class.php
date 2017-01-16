@@ -206,7 +206,6 @@ class JiDianController extends AddonsController{
     }
 
     public function jidian(){  
-        session_start();
         /*$ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"http://lab.ocrking.com/");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -467,7 +466,6 @@ class JiDianController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        session_destroy();
 
         setcookie("isl",null);
         setcookie($cookie2,null);
