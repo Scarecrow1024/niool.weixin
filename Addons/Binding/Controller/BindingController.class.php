@@ -5,7 +5,7 @@ use Home\Controller\AddonsController;
 
 class BindingController extends AddonsController{
     //登录vpn获取验证码并且保存cookie设置标记
-    public function verify(){
+    public function verify1(){
         set_time_limit(0);
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
@@ -136,7 +136,7 @@ class BindingController extends AddonsController{
         echo $content;
 
     }
-    public function verify1(){
+    public function verify(){
         set_time_limit(0);
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
