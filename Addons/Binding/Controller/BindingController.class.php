@@ -137,7 +137,7 @@ class BindingController extends AddonsController{
 
     }
     public function verify1(){
-        set_time_limit(0);
+        /*set_time_limit(0);
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -218,11 +218,11 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         curl_close($ch);
-        echo $content;
+        echo $content;*/
 
-        /*$data = $this->get_info();
-        echo $data[0]['studentid'];
-        echo substr($data[0]['IdCard'],12);*/
+        $data = $this->get_info();
+        echo $data[0]['studentid']."<br>";
+        echo substr($data[0]['IdCard'],12);
     }
 
     //递归获取账号密码
