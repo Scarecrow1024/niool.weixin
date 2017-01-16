@@ -106,7 +106,7 @@ class LinianScoreController extends AddonsController{
         curl_close($ch);
         echo $content;
 
-        $xmlstr=$content;
+        /*$xmlstr=$content;
         $openid=get_openid();
         if($openid=='-1'){
             $img_id='default'; 
@@ -120,7 +120,7 @@ class LinianScoreController extends AddonsController{
         $jpg = $xmlstr;//得到post过来的二进制原始数据
         $file = fopen("Verify/".$filename,"w");//打开文件准备写入
         fwrite($file,$jpg);//写入
-        fclose($file);//关闭*/
+        fclose($file);//关闭*/*/
 
     }
 
@@ -137,6 +137,7 @@ class LinianScoreController extends AddonsController{
 
     //本学期成绩
     public function index(){
+        session_start();
         if(isset($_COOKIE['isl'])){
             $cookie4="websvr_cookie"."=".$_COOKIE['websvr_cookie'];
             $cookie2="ENABLE_RANDCODE"."=".$_COOKIE['ENABLE_RANDCODE'];
@@ -255,7 +256,7 @@ class LinianScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
         curl_close($ch);
-        
+        session_destroy();
         $this->display();
     }
 
