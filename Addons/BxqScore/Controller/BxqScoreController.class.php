@@ -327,10 +327,6 @@ class BxqScoreController extends AddonsController{
         $logout=curl_exec($ch);
         curl_close($ch);
 
-        setcookie("isl",null);
-        setcookie($cookie2,null);
-        setcookie($cookie3,null);
-        setcookie($cookie4,null);
         $this->display();
     }
 
