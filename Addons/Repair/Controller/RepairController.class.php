@@ -175,12 +175,11 @@ class RepairController extends AddonsController{
     
     public function repair(){
         //先登陆
-        //$openid=$_POST['openid'];
-        $openid = 'oikLjwAbTRfHrBqqjN_aSi2pYhS4';
+        $openid=$_POST['openid'];
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
 
-        $name = 'HPU';
+        $name = 'HPU小微';
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
         $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
@@ -215,7 +214,7 @@ class RepairController extends AddonsController{
         curl_close ( $ch );
         //echo $content;
         preg_match_all('|value="(.*)"|isU',$content,$arr);
-        $pwdstr = $arr[1][27];
+        $pwdstr = $arr[1][28];
 
         $Area_Serial=$_POST['Area_Serial'];
         $Area_Name=$_POST['Area_Name'];
@@ -226,7 +225,7 @@ class RepairController extends AddonsController{
         $Mobile=$_POST['Mobile'];
         $BuserName=$_POST['BuserName'];
         $Bsource=$_POST['Bsource'];
-        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."小微"."&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
+        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
         $url = "http://repair.hpu.edu.cn/rsp/my/wantrepair";
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,$url);
@@ -240,8 +239,8 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content = curl_exec ( $ch );
         curl_close ( $ch );
-        echo $content;
-        //echo "ヾ(o◕∀◕)ﾉヾ报修成功";
+        //echo $content;
+        echo "ヾ(o◕∀◕)ﾉヾ报修成功";
     }
    
 }
