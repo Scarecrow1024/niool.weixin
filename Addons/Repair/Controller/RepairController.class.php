@@ -175,7 +175,8 @@ class RepairController extends AddonsController{
     
     public function repair(){
         //先登陆
-        $openid=$_POST['openid'];
+        //$openid=$_POST['openid'];
+        $openid = 'oikLjwAbTRfHrBqqjN_aSi2pYhS4';
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
 
@@ -239,8 +240,8 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content = curl_exec ( $ch );
         curl_close ( $ch );
-        //echo $content;
-        echo "ヾ(o◕∀◕)ﾉヾ报修成功";
+        echo $content;
+        //echo "ヾ(o◕∀◕)ﾉヾ报修成功";
     }
    
 }
