@@ -92,8 +92,8 @@ http-equiv="X-UA-Compatible">
       <td class=""><?php echo $arr[28+$i][4]?></td>
       <td class=""><?php echo $arr[28+$i][6]?></td>
       <td class=""><?php echo $arr[28+$i][7]?></td>
-      <?php if($arr[28+$i][9]==1){?>
-            <td class=""><a href="https://blog.niool.com/weixin/index.php?s=/addon/Lib/Lib/xujie/xjh/<?php echo $arr[28+$i][2]?>">续借</a></td>
+      <?php if($arr[28+$i][9]==1 || $arr[18][1] != '张彦飞'){?>
+            <td class="">续借</td>
       <?php }else{ ?>
             <td class=""><a href="https://blog.niool.com/weixin/index.php?s=/addon/Lib/Lib/xujie/xjh/<?php echo $arr[28+$i][2]?>">续借</a></td>
       <?php }?>      
