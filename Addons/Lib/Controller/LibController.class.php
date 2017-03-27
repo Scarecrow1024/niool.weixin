@@ -134,9 +134,7 @@ class LibController extends AddonsController{
             $this->error('续借失败，该书已被预约', U('/addon/Lib/Lib/grzx/'));
         }else{
             $this->success('续借成功', U('/addon/Lib/Lib/grzx/'));
-        }
-        //echo $post;
-        
+        }        
     }
         
     
