@@ -128,7 +128,7 @@ class LibController extends AddonsController{
         $content=iconv('GB2312', 'UTF-8', $content); 
         curl_close($ch);
         //$content=mb_convert_encoding($content, "UTF-8", "HTML-ENTITIES");
-        echo $content;
+        //echo $content;
         //exit();
         if(strstr($content, "该书已预约")){
             $this->error('续借失败，该书已被预约', U('/addon/Lib/Lib/grzx/'));
