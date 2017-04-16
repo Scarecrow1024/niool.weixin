@@ -86,7 +86,7 @@ http-equiv="X-UA-Compatible">
         <th class="">次数</th>
     </tr>
     <?php }?>
-    <?php for($i=1;$i<=$con;$i++){?>
+    <?php for($i=0;$i<$con;$i++){?>
     <tr>
       <td class="" style="width: 30%"><?php echo mb_substr($arr[28+$i][1],0,24);?></td>
       <td class=""><?php echo $arr[28+$i][4]?></td>
