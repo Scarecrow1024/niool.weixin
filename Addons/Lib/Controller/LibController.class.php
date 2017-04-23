@@ -174,7 +174,7 @@ class LibController extends AddonsController{
         return $info;*/
         return $info;
     }
-    date_default_timezone_set("Asia/Shanghai");
+    
     public function grzx(){
         $time=date('G')*3600+date('i')*60+date('s')-290;
         $tday1=$time;
