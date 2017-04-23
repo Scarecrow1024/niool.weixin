@@ -116,11 +116,23 @@ class LibController extends AddonsController{
         $openid=get_openid();
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $xjh=$_GET['xjh'];
+        $headers = array();
+        $headers[] = 'X-Apple-Tz: 0';
+        $headers[] = 'X-Apple-Store-Front: 143444,12';
+        $headers[] = 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8';
+        $headers[] = 'Accept-Encoding: gzip, deflate';
+        $headers[] = 'Accept-Language: en-US,en;q=0.5';
+        $headers[] = 'Cache-Control: no-cache';
+        $headers[] = 'Referer: http://218.196.244.90:8080/dzff.php';
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=utf-8';
+        $headers[] = 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:28.0) Gecko/20100101 Firefox/28.0';
+        $headers[] = 'X-MicrosoftAjax: Delta=true';
         $ch=curl_init();
         $post="netxj%5B%5D=".$xjh."%2F%2F30%2F%2F0&T1=".$studentid."&Submit=%D0%F8%BD%E8%D1%A1%D6%D0%CD%BC%CA%E9";
         $url="http://218.196.244.90:8080/bkxj1.php";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -176,7 +188,7 @@ class LibController extends AddonsController{
     }
     
     public function grzx(){
-        $time=date('G')*3600+date('i')*60+date('s')-290;
+        $time=date('G')*3600+date('i')*60+date('s')-360;
         $tday1=$time;
         $user=M('user');
         $openid=get_openid();
