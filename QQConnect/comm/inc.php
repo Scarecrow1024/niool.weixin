@@ -1,2 +1,2 @@
 <?php die('forbidden'); ?>
-{"appid":"101329450","appkey":"9716fd70df0b8433d5deddb62c498a71","callback":"https://blog.niool.com/weixin/QQConnect/callback.php","scope":"get_user_info,add_share,list_album,add_weibo,get_fanslist","errorReport":true,"storageType":"file","host":"localhost","user":"root","password":"zyf941126","database":"weixin"}
+{"appid":"101329450","appkey":"9716fd70df0b8433d5deddb62c498a71","callback":"http://niool.com/weixin/QQConnect/callback.php","scope":"get_user_info,add_share,list_album,add_weibo,get_fanslist","errorReport":true,"storageType":"file","host":"localhost","user":"root","password":"zyf941126","database":"weixin"}
