@@ -25,10 +25,10 @@
 	$result=mysql_query($sql,$link);
 	$ret=mysql_fetch_assoc($result);
 	if($ret!=false){
-		$url="http://niool.com/weixin/index.php?s=/addon/QQCourseList/QQCourseList/course.html";
+		$url="http://blog.niool.com/weixin/index.php?s=/addon/QQCourseList/QQCourseList/course.html";
 		header("location:$url");
 	}else{
-		$url="http://niool.com/weixin/index.php?s=/addon/QQBind/QQBind/login.html";
+		$url="http://blog.niool.com/weixin/index.php?s=/addon/QQBind/QQBind/login.html";
 		header("location:$url");
 	}
 
