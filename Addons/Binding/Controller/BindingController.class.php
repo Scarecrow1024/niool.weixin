@@ -442,6 +442,8 @@ class BindingController extends AddonsController{
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content = curl_exec ( $ch );
         curl_close ( $ch );
@@ -457,7 +459,7 @@ class BindingController extends AddonsController{
         $content=str_replace("八","8",$content);
         $content=str_replace("九","9",$content);
         $html->load($content);
-        $table=$html->find('table')[7];
+        $table=$html->find('table')[9];
         $arr=$this->get_td_array($table);//执行函数
         //第一步获取到所有的课程一个课程放到一个数组中去
         $data = array();
@@ -508,6 +510,8 @@ class BindingController extends AddonsController{
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content = curl_exec ($ch);
         curl_close ($ch);
@@ -526,7 +530,7 @@ class BindingController extends AddonsController{
         $content=str_replace("九","9",$content);
 
         $html->load($content);
-        $table=$html->find('table')[7];
+        $table=$html->find('table')[9];
         $arr=$this->get_td_array($table);//执行函数
         //第一步获取到所有的课程一个课程放到一个数组中去
         $data = array();
@@ -583,13 +587,15 @@ class BindingController extends AddonsController{
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content = curl_exec ( $ch );
         curl_close ( $ch );
         $content=iconv("gbk", "utf-8", $content);
         $html=new SimpleHtmlController();
         $html->load($content);
-        $content=$html->find('table')[4];
+        $content=$html->find('table')[7];
         $content=html_entity_decode($content);
         return $content;
     }
