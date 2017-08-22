@@ -379,7 +379,7 @@ class BindingController extends AddonsController{
                 //保存网页版课表
                 $webcourse=$this->getLnKb2();
                 //保存源课表
-                $yscore=$this->getXuanke3();
+                $yscore=$this->getLnKb3();
                 //保存历年成绩
                 $openid=get_openid();
                 //$score=$this->getLiNian();
@@ -571,6 +571,32 @@ class BindingController extends AddonsController{
         $js_data=json_encode($js_data);
         return $js_data;
     }
+
+    function getLnKb3(){
+        if(isset($_COOKIE['isl'])){
+            $session4="websvr_cookie"."=".$_COOKIE['websvr_cookie'];
+            $session2="ENABLE_RANDCODE"."=".$_COOKIE['ENABLE_RANDCODE'];
+            $session3="TWFID"."=".$_COOKIE['TWFID'];
+        }
+        $ch=curl_init();
+        $post="zxjxjhh=2017-2018-1-1";
+        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/lnkbcxAction.do");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content = curl_exec ( $ch );
+        curl_close ( $ch );
+        $content=iconv("gbk", "utf-8", $content);
+        $html=new SimpleHtmlController();
+        $html->load($content);
+        $content=$html->find('table')[4];
+        $content=html_entity_decode($content);
+        return $content;
+    }
+
 
     //图文版课表
     function getXuanke1(){
