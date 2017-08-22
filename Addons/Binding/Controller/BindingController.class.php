@@ -334,12 +334,9 @@ class BindingController extends AddonsController{
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
-        //curl_setopt($ch,CURLOPT_COOKIE,$session1); 
-        //curl_setopt($ch,CURLOPT_COOKIE,$session2);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $content=curl_exec($ch);
         curl_close ( $ch );
 
@@ -465,9 +462,9 @@ class BindingController extends AddonsController{
         //第一步获取到所有的课程一个课程放到一个数组中去
         $data = array();
         for($i=1;$i<count($arr);$i++){
-            if((count($arr[$i])%18)==0){
-                if(count($arr[$i])>18){
-                    $data[$i]=array_chunk($arr[$i], 18);
+            if((count($arr[$i])%17)==0){
+                if(count($arr[$i])>17){
+                    $data[$i]=array_chunk($arr[$i], 17);
                 }else{
                     $data[$i][]=$arr[$i];
                     if(count($arr[$i+1])==7){
@@ -486,7 +483,7 @@ class BindingController extends AddonsController{
         $js_data=array();
         foreach($data as $k=>$v){
             for($i=0;$i<count($v);$i++){
-                if(count($data[$k][$i])==18){
+                if(count($data[$k][$i])==17){
                     $js_data[$data[$k][$i][12]][]="第".trim($data[$k][$i][13])."节有课:\n".trim($data[$k][$i][2])."\n".trim($data[$k][$i][16].$data[$k][$i][17])."\n".trim($data[$k][$i][7]).trim($data[$k][$i][11]);
                 }else{
                     $js_data[$data[$k][$i][1]][]="第".trim($data[$k][$i][2])."节有课:\n".trim($data[$k][0][2])."\n".trim($data[$k][$i][5].$data[$k][$i][6])."\n".trim($data[$k][0][7]).trim($data[$k][$i][0]);
@@ -534,8 +531,8 @@ class BindingController extends AddonsController{
         //第一步获取到所有的课程一个课程放到一个数组中去
         $data = array();
         for($i=1;$i<count($arr);$i++){
-            if((count($arr[$i])%18)==0){
-                if(count($arr[$i])>18){
+            if((count($arr[$i])%17)==0){
+                if(count($arr[$i])>17){
                     $data[$i]=array_chunk($arr[$i], 18);
                 }else{
                     $data[$i][]=$arr[$i];
@@ -555,7 +552,7 @@ class BindingController extends AddonsController{
         $js_data=array();
         foreach($data as $k=>$v){
             for($i=0;$i<count($v);$i++){
-                if(count($data[$k][$i])==18){
+                if(count($data[$k][$i])==17){
                     $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['score'][]=trim($data[$k][$i][2]);
                     $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['teacher'][]=trim($data[$k][$i][7]).trim($data[$k][$i][11]);
                     $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['add'][]=trim($data[$k][$i][16].$data[$k][$i][17]);
