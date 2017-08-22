@@ -375,9 +375,9 @@ class BindingController extends AddonsController{
             }else{
                 $this->subscribe();
                 //保存图文版课表
-                $course=$this->getXuanke1();
+                $course=$this->getLnKb1();
                 //保存网页版课表
-                $webcourse=$this->getXuanke2();
+                $webcourse=$this->getLnKb2();
                 //保存源课表
                 $yscore=$this->getXuanke3();
                 //保存历年成绩
@@ -430,6 +430,148 @@ class BindingController extends AddonsController{
         }      
         return true;
     }
+
+    function getLnKb1(){
+        if(isset($_COOKIE['isl'])){
+            $session4="websvr_cookie"."=".$_COOKIE['websvr_cookie'];
+            $session2="ENABLE_RANDCODE"."=".$_COOKIE['ENABLE_RANDCODE'];
+            $session3="TWFID"."=".$_COOKIE['TWFID'];
+        }
+        $ch=curl_init();
+        $post="zxjxjhh=2017-2018-1-1";
+        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/lnkbcxAction.do");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content = curl_exec ( $ch );
+        curl_close ( $ch );
+        $content=iconv("gbk", "utf-8", $content);
+        $html=new SimpleHtmlController();
+        $content=str_replace("一","1",$content);
+        $content=str_replace("二","2",$content);
+        $content=str_replace("三","3",$content);
+        $content=str_replace("四","4",$content);
+        $content=str_replace("五","5",$content);
+        $content=str_replace("六","6",$content);
+        $content=str_replace("七","7",$content);
+        $content=str_replace("八","8",$content);
+        $content=str_replace("九","9",$content);
+        $html->load($content);
+        $table=$html->find('table')[7];
+        $arr=$this->get_td_array($table);//执行函数
+        //第一步获取到所有的课程一个课程放到一个数组中去
+        $data = array();
+        for($i=1;$i<count($arr);$i++){
+            if((count($arr[$i])%18)==0){
+                if(count($arr[$i])>18){
+                    $data[$i]=array_chunk($arr[$i], 18);
+                }else{
+                    $data[$i][]=$arr[$i];
+                    if(count($arr[$i+1])==7){
+                        $data[$i][]=$arr[$i+1];
+                    }
+                    if(count($arr[$i+1])==7&&count($arr[$i+2])==7){
+                        $data[$i][]=$arr[$i+2];
+                    }
+                    if(count($arr[$i+2])==7&&count($arr[$i+3])==7){
+                        $data[$i][]=$arr[$i+3];
+                    }
+                }   
+            }
+        }
+        //return $data;
+        $js_data=array();
+        foreach($data as $k=>$v){
+            for($i=0;$i<count($v);$i++){
+                if(count($data[$k][$i])==18){
+                    $js_data[$data[$k][$i][12]][]="第".trim($data[$k][$i][13])."节有课:\n".trim($data[$k][$i][2])."\n".trim($data[$k][$i][16].$data[$k][$i][17])."\n".trim($data[$k][$i][7]).trim($data[$k][$i][11]);
+                }else{
+                    $js_data[$data[$k][$i][1]][]="第".trim($data[$k][$i][2])."节有课:\n".trim($data[$k][0][2])."\n".trim($data[$k][$i][5].$data[$k][$i][6])."\n".trim($data[$k][0][7]).trim($data[$k][$i][0]);
+                }
+            }
+        }
+
+        return json_encode($js_data);
+    }
+
+    function getLnKb2(){
+        if(isset($_COOKIE['isl'])){
+            $session4="websvr_cookie"."=".$_COOKIE['websvr_cookie'];
+            $session2="ENABLE_RANDCODE"."=".$_COOKIE['ENABLE_RANDCODE'];
+            $session3="TWFID"."=".$_COOKIE['TWFID'];
+        }
+        $ch=curl_init();
+        $post="zxjxjhh=2017-2018-1-1";
+        curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/lnkbcxAction.do");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content = curl_exec ($ch);
+        curl_close ($ch);
+        $content=iconv("gbk", "utf-8", $content);
+
+        $html=new SimpleHtmlController();
+
+        $content=str_replace("一","1",$content);
+        $content=str_replace("二","2",$content);
+        $content=str_replace("三","3",$content);
+        $content=str_replace("四","4",$content);
+        $content=str_replace("五","5",$content);
+        $content=str_replace("六","6",$content);
+        $content=str_replace("七","7",$content);
+        $content=str_replace("八","8",$content);
+        $content=str_replace("九","9",$content);
+
+        $html->load($content);
+        $table=$html->find('table')[7];
+        $arr=$this->get_td_array($table);//执行函数
+        //第一步获取到所有的课程一个课程放到一个数组中去
+        $data = array();
+        for($i=1;$i<count($arr);$i++){
+            if((count($arr[$i])%18)==0){
+                if(count($arr[$i])>18){
+                    $data[$i]=array_chunk($arr[$i], 18);
+                }else{
+                    $data[$i][]=$arr[$i];
+                    if(count($arr[$i+1])==7){
+                        $data[$i][]=$arr[$i+1];
+                    }
+                    if(count($arr[$i+1])==7&&count($arr[$i+2])==7){
+                        $data[$i][]=$arr[$i+2];
+                    }
+                    if(count($arr[$i+2])==7&&count($arr[$i+3])==7){
+                        $data[$i][]=$arr[$i+3];
+                    }
+                }   
+            }
+        }
+        //return $data;
+        $js_data=array();
+        foreach($data as $k=>$v){
+            for($i=0;$i<count($v);$i++){
+                if(count($data[$k][$i])==18){
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['score'][]=trim($data[$k][$i][2]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['teacher'][]=trim($data[$k][$i][7]).trim($data[$k][$i][11]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['add'][]=trim($data[$k][$i][16].$data[$k][$i][17]);
+                    $js_data[$data[$k][$i][12]][trim($data[$k][$i][13])]['week'][]=trim($data[$k][$i][11]);
+                }else{
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['score'][]=trim($data[$k][0][2]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['teacher'][]=trim($data[$k][0][7]).trim($data[$k][$i][0]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['add'][]=trim($data[$k][$i][5].$data[$k][$i][6]);
+                    $js_data[$data[$k][$i][1]][trim($data[$k][$i][2])]['week'][]=trim($data[$k][$i][0]);
+                }
+            }
+        }
+        $js_data=json_encode($js_data);
+        return $js_data;
+    }
+
     //图文版课表
     function getXuanke1(){
         if(isset($_COOKIE['isl'])){
