@@ -437,7 +437,7 @@ class BindingController extends AddonsController{
         $ch=curl_init();
         $post="zxjxjhh=2017-2018-1-1";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/lnkbcxAction.do");
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -505,7 +505,7 @@ class BindingController extends AddonsController{
         $ch=curl_init();
         $post="zxjxjhh=2017-2018-1-1";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/lnkbcxAction.do");
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -570,7 +570,7 @@ class BindingController extends AddonsController{
             }
         }
         $js_data=json_encode($js_data);
-        return $js_data;
+        echo $js_data;
     }
 
     function getLnKb3(){
