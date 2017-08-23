@@ -486,9 +486,9 @@ class BindingController extends AddonsController{
         foreach($data as $k=>$v){
             for($i=0;$i<count($v);$i++){
                 if(count($data[$k][$i])==17){
-                    $js_data[$data[$k][$i][12]][]="第".trim($data[$k][$i][13])."节有课:\n".trim($data[$k][$i][2])."\n".trim($data[$k][$i][16].$data[$k][$i][17])."\n".trim($data[$k][$i][7]).trim($data[$k][$i][11]);
+                    $js_data[trim($data[$k][$i][12])][]="第".trim($data[$k][$i][13])."节有课:\n".trim($data[$k][$i][2])."\n".trim($data[$k][$i][16].$data[$k][$i][17])."\n".trim($data[$k][$i][7]).trim($data[$k][$i][11]);
                 }else{
-                    $js_data[$data[$k][$i][1]][]="第".trim($data[$k][$i][2])."节有课:\n".trim($data[$k][0][2])."\n".trim($data[$k][$i][5].$data[$k][$i][6])."\n".trim($data[$k][0][7]).trim($data[$k][$i][0]);
+                    $js_data[trim($data[$k][$i][1])][]="第".trim($data[$k][$i][2])."节有课:\n".trim($data[$k][0][2])."\n".trim($data[$k][$i][5].$data[$k][$i][6])."\n".trim($data[$k][0][7]).trim($data[$k][$i][0]);
                 }
             }
         }
@@ -537,7 +537,7 @@ class BindingController extends AddonsController{
         for($i=1;$i<count($arr);$i++){
             if((count($arr[$i])%17)==0){
                 if(count($arr[$i])>17){
-                    $data[$i]=array_chunk($arr[$i], 18);
+                    $data[$i]=array_chunk($arr[$i], 17);
                 }else{
                     $data[$i][]=$arr[$i];
                     if(count($arr[$i+1])==7){
