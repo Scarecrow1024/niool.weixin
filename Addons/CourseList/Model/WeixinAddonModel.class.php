@@ -30,7 +30,7 @@ class WeixinAddonModel extends WeixinModel {
         }else{
         	$data=$user->where("openid=".'"'.$openid.'"')->getField('course');
 
-	        $url=addons_url ('CourseList://CourseList/course?openid='.$openid);
+	        $url=addons_url ('CourseList://CourseList/ycourse?openid='.$openid);
 	        $url2=addons_url ('Kclass://Kclass/login');
 
 	        $data=json_decode($data,true);                   
@@ -69,7 +69,8 @@ class WeixinAddonModel extends WeixinModel {
 	            $arr[0]['Title']=$title;
 	            $arr[0]['Url']=$url;
 	            $arr[0]['PicUrl']="http://imgsrc.baidu.com/forum/w%3D580/sign=b14afd2e0cf41bd5da53e8fc61da81a0/5c6409d162d9f2d39b783eeaabec8a136227ccde.jpg";
-	            $arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表\n回复【解绑】可以导入下学期课表";
+	            //$arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表\n回复【解绑】可以导入下学期课表";
+	            $arr[1]['Title']="教务处未提供最新课表因此现在查询结果仅做参考,请在正式开学后重新绑定\n回复【解绑】可以导入下学期课表";
 	            $arr[1]['Url']=$url2;
 
 	            $xingqi = date('w');
