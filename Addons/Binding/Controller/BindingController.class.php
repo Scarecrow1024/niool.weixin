@@ -570,7 +570,7 @@ class BindingController extends AddonsController{
             }
         }
         $js_data=json_encode($js_data);
-        echo $js_data;
+        return $js_data;
     }
 
     function getLnKb3(){
