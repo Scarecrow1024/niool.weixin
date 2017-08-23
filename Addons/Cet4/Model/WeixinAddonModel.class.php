@@ -9,7 +9,7 @@ use Home\Model\WeixinModel;
  */
 class WeixinAddonModel extends WeixinModel {
 	function reply() {
-        $url='http://cet.redrock-team.com/#';
+        $url='http://weixiao.qq.com/apps/public/cet/index.html';
         $dataArr[0]=array(
         'Title' => '四六级免准考证成绩查询',
         'PicUrl' => 'http://img1.imgtn.bdimg.com/it/u=3167187823,3740112694&fm=21&gp=0.jpg',
@@ -24,7 +24,7 @@ class WeixinAddonModel extends WeixinModel {
     	$dataArr[2]=array(
         'Title' => '准考证查询入口①',
         'PicUrl' => 'http://img0.ph.126.net/-ByIDj-n0Lhwdia5x-sn_g==/6599309471842186911.jpg',
-        'Url' => 'http://www.wxhand.com/addon/Cet46/Cet46View/query_view/token/e784d91275ab58dd91bff9f7ad5207d5.html'
+        'Url' => 'http://weixiao.qq.com/apps/public/cet/index.html'
     	);
 
         $dataArr[3]=array(
