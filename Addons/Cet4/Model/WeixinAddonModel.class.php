@@ -18,7 +18,7 @@ class WeixinAddonModel extends WeixinModel {
     	$dataArr[1]=array(
         'Title' => '快捷查询入口',
         'PicUrl' => 'http://img3.imgtn.bdimg.com/it/u=1846745025,2752009162&fm=21&gp=0.jpg',
-        'Url' => 'http://www.yunchafen.com.cn/score/alipay/cet-login',
+        'Url' => 'http://weixiao.qq.com/apps/public/cet/index.html',
     	);
 
     	$dataArr[2]=array(
