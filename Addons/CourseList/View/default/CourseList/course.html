@@ -72,7 +72,7 @@
                                                 <p>
                                                     <?php echo trim($day[$i][3]["score"][$k])?>
                                                 </p>
-                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo $day[$i][3]["add"][$k]?></p>
+                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo trim($day[$i][3]["add"][$k])?></p>
                                                 <p><img src="__ROOT__/Addons/CourseList/View/default/Public/clock.png" alt="时间"><?php echo trim($day[$i][3]["teacher"][$k])?></p>
                                             </div> 
                                         <?php }}?>                                </td>
@@ -90,7 +90,7 @@
                                                 <p>
                                                     <?php echo trim($day[$i][5]["score"][$k])?>
                                                 </p>
-                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo $day[$i][5]["add"][$k]?></p>
+                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo trim($day[$i][5]["add"][$k])?></p>
                                                 <p><img src="__ROOT__/Addons/CourseList/View/default/Public/clock.png" alt="时间"><?php echo trim($day[$i][5]["teacher"][$k])?></p>
                                             </div> 
                                         <?php }}?>                                </td>
@@ -108,7 +108,7 @@
                                                 <p>
                                                     <?php echo trim($day[$i][7]["score"][$k])?>
                                                 </p>
-                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo $day[$i][7]["add"][$k]?></p>
+                                                <p><img src="__ROOT__/Addons/CourseList/View/default/Public/map.png" alt="地址"><?php echo trim($day[$i][7]["add"][$k])?></p>
                                                 <p><img src="__ROOT__/Addons/CourseList/View/default/Public/clock.png" alt="时间"><?php echo trim($day[$i][7]["teacher"][$k])?></p>
                                             </div> 
                                         <?php }}?>                                </td>
@@ -118,7 +118,7 @@
                                     <td id="content">
                                         <!-- 循环节次重课信息 -->
                                         <?php 
-                                            if(isset($day[$i][9])){
+                                            if(isset(trim($day[$i][9]))){
                                                 $con=count($day[$i][9]["score"]);
                                                 for($k=0;$k<$con;$k++){
                                         ?>
@@ -131,7 +131,7 @@
                                             </div> 
                                         <?php }}?>                                </td>
                                 </tr> 
-                                <?php foreach($day as $v=>$k){if($v==date('w')){?>                
+                                <?php foreach($day as $v=>$k){if(trim($v)==date('w')){?>                
                 <tr>
                 
                                                  </td>
