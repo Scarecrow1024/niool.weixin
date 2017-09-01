@@ -24,16 +24,16 @@ class WeixinAddonModel extends WeixinModel {
 	                'Url' => $url
 	            );
 	        $dataArr[1]=array(
-	                'Title' => '你还未绑定账号点击图片完成认证',	                
+	                'Title' => '你还未绑定账号点击图片完成认证',
 	            );
 			$this->replyNews($dataArr);
         }else{
         	$data=$user->where("openid=".'"'.$openid.'"')->getField('course');
 
-	        $url=addons_url ('CourseList://CourseList/ycourse?openid='.$openid);
+	        $url=addons_url ('CourseList://CourseList/course?openid='.$openid);
 	        $url2=addons_url ('Kclass://Kclass/login');
 
-	        $data=json_decode($data,true);                   
+	        $data=json_decode($data,true);
 	        $arr=array();
 	        $weekarray=array("日","一","二","三","四","五","六");
 	        /*if($weekarray[date("w")]=="六"||$weekarray[date("w")]=="日"){
@@ -46,12 +46,12 @@ class WeixinAddonModel extends WeixinModel {
 	        }else{*/
 	        	$rs=curl_init();
 		        $url1="http://my.hpu.edu.cn/userPasswordValidate.portal";
-		        $post="Login.Token1=311309010130&Login.Token2=024361&goto=http%3A%2F%2Fmy.hpu.edu.cn%2FloginSuccess.portal&gotoOnFail=http%3A%2F%2Fmy.hpu.edu.cn%2FloginFailure.portal"; 
+		        $post="Login.Token1=311309010130&Login.Token2=024361&goto=http%3A%2F%2Fmy.hpu.edu.cn%2FloginSuccess.portal&gotoOnFail=http%3A%2F%2Fmy.hpu.edu.cn%2FloginFailure.portal";
 		        curl_setopt($rs,CURLOPT_URL,$url1);
 		        //post数据来源
 		        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/login.portal");
 		        curl_setopt($rs,CURLOPT_POST,1);
-		        curl_setopt($rs,CURLOPT_POSTFIELDS,$post);  
+		        curl_setopt($rs,CURLOPT_POSTFIELDS,$post);
 		        curl_setopt($rs,CURLOPT_RETURNTRANSFER,1);
 		        curl_setopt($rs,CURLOPT_FOLLOWLOCATION,1);
 		        //跳转到数据页面
@@ -69,8 +69,8 @@ class WeixinAddonModel extends WeixinModel {
 	            $arr[0]['Title']=$title;
 	            $arr[0]['Url']=$url;
 	            $arr[0]['PicUrl']="http://imgsrc.baidu.com/forum/w%3D580/sign=b14afd2e0cf41bd5da53e8fc61da81a0/5c6409d162d9f2d39b783eeaabec8a136227ccde.jpg";
-	            //$arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表\n回复【解绑】可以导入下学期课表";
-	            $arr[1]['Title']="教务处未提供最新课表因此现在查询结果仅做参考,请在正式开学后重新绑定\n回复【解绑】可以导入下学期课表\n点击图片可查看本周全部课表";
+	            $arr[1]['Title']="点我可查看空教室\n点击图片可查看本周全部课表\n回复【解绑】可以导入下学期课表";
+	            //$arr[1]['Title']="教务处未提供最新课表因此现在查询结果仅做参考,请在正式开学后重新绑定\n回复【解绑】可以导入下学期课表\n点击图片可查看本周全部课表";
 	            $arr[1]['Url']=$url2;
 
 	            $xingqi = date('w');

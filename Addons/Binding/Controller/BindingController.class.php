@@ -372,11 +372,11 @@ class BindingController extends AddonsController{
             }else{
                 $this->subscribe();
                 //保存图文版课表
-                $course=$this->getLnKb1();
+                $course=$this->getXuanke1();
                 //保存网页版课表
-                $webcourse=$this->getLnKb2();
+                $webcourse=$this->getXuanke2();
                 //保存源课表
-                $yscore=$this->getLnKb3();
+                $yscore=$this->getXuanke3();
                 //保存历年成绩
                 $openid=get_openid();
                 //$score=$this->getLiNian();
@@ -386,32 +386,28 @@ class BindingController extends AddonsController{
                 $data['yscore']=$yscore;
                 $bind=$user->where("openid=".'"'.$openid.'"')->save($data);
                 if($bind){
+                    //退出
+                    $ch=curl_init();
+                    $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
+                    curl_setopt($ch,CURLOPT_URL,$url);
+                    curl_setopt($ch, CURLOPT_HEADER, 1);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+                    curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
+                    curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+                    curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
+                    setcookie("isl","0");
+                    setcookie("TWFID","deleted");
+                    setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
+                    setcookie("path","/");
+                    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+                    $logout=curl_exec($ch);
+                    curl_close($ch);
                     $this->success($data["name"]."同学绑定成功",U('/addon/CourseList/CourseList/course/'));
-                }     
+                }
             }
         } 
         //绑定课程表
-        //退出
-        $ch=curl_init();
-        $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
-        setcookie("isl","0");
-        setcookie("TWFID","deleted");
-        setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
-        setcookie("path","/");
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $logout=curl_exec($ch);
-        curl_close($ch);
         
-        setcookie("isl",null);
-        setcookie($session2,null);
-        setcookie($session3,null);
-        setcookie($session4,null);
     }
 
     // 关注公众号事件

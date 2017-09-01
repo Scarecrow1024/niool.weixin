@@ -31,7 +31,7 @@ class WeixinAddonModel extends WeixinModel {
         $is=$user->where("openid=".'"'.$openid.'"')->find();
         if($is==NULL){
             $user->add($data);
-        }      
+        }
 		return true;
 	}
 	
