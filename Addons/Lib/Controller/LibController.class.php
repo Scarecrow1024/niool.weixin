@@ -188,7 +188,7 @@ class LibController extends AddonsController{
     }
     
     public function grzx(){
-        $time=date('G')*3600+date('i')*60+date('s')-360;
+        $time=date('G')*3600+date('i')*60+date('s')-390;
         $tday1=$time;
         $user=M('user');
         $openid=get_openid();
@@ -206,7 +206,7 @@ class LibController extends AddonsController{
         $html=new SimpleHtmlController();
         $html->load($content);
         $table=$html->find('table')[5];
-        $arr=$this->get_td_array($table);//执行函数 
+        $arr=$this->get_td_array($table);//执行函数
         //print_r($arr);
         $con=0;
         foreach($arr as $v){
