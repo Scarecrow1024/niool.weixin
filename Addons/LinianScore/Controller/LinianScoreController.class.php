@@ -25,7 +25,7 @@ class LinianScoreController extends AddonsController{
         /*
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
         */
-        $arr=array(); 
+        $arr=array();
         $arr[0][]="311408000107";
         $arr[0][]="155506";
         $arr[1][]="311502020328";
@@ -46,7 +46,7 @@ class LinianScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //带上上登陆前的cookie
         curl_setopt($ch,CURLOPT_COOKIE,$cookie);
@@ -56,7 +56,7 @@ class LinianScoreController extends AddonsController{
         //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配
         $cookie2=trim($str1[1][0]);
         $cookie3=trim($str1[1][1]);
         curl_setopt($ch, CURLOPT_COOKIE, "$cookie2;$cookie3");
@@ -77,10 +77,10 @@ class LinianScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配教务处登陆时设置的cookie
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $cookie4 = trim($str[1]); //获得COOKIE（SESSIONID）
         $arr4=explode("=", $cookie4);
-        //global $arr4; 
+        //global $arr4;
         //curl_setopt($ch, CURLOPT_COOKIE, $cookie4);
         //setcookie($arr4[0],$arr4[1]);
         curl_close($ch);
@@ -125,7 +125,7 @@ class LinianScoreController extends AddonsController{
     }
 
     //登录页面
-    public function login(){   
+    public function login(){
         $user=M('user');
         $openid=get_openid();
         $mm = $user->where("openid=".'"'.$openid.'"')->getField('password');
