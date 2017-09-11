@@ -225,7 +225,7 @@ class RepairController extends AddonsController{
         $Mobile=$_POST['Mobile'];
         $BuserName=$_POST['BuserName'];
         $Bsource=$_POST['Bsource'];
-        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."-z&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
+        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
         $url = "http://repair.hpu.edu.cn/rsp/my/wantrepair";
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,$url);
