@@ -178,8 +178,8 @@ class RepairController extends AddonsController{
         $openid=$_POST['openid'];
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
-
-        $name = 'HPU小微';
+        $name = $user->where("openid=".'"'.$openid.'"')->getField('name');
+        //$name = 'HPU小微';
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
         $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
@@ -225,7 +225,7 @@ class RepairController extends AddonsController{
         $Mobile=$_POST['Mobile'];
         $BuserName=$_POST['BuserName'];
         $Bsource=$_POST['Bsource'];
-        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
+        $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."-z&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
         $url = "http://repair.hpu.edu.cn/rsp/my/wantrepair";
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,$url);
