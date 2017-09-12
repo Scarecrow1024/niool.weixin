@@ -240,7 +240,8 @@ class RepairController extends AddonsController{
         $content = curl_exec ( $ch );
         curl_close ( $ch );
         //echo $content;
-        echo "ヾ(o◕∀◕)ﾉヾ报修成功";
+        //echo "ヾ(o◕∀◕)ﾉヾ报修成功";
+        echo "后台已受理，维修人员将尽快上门服务";
     }
    
 }
