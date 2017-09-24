@@ -23,7 +23,7 @@ class WeixinAddonModel extends WeixinModel {
                         'Url' => $url
                     );
                 $dataArr[1]=array(
-                        'Title' => '你还未绑定账号点击图片完成认证',                   
+                        'Title' => '你还未绑定账号点击图片完成认证',
                     );
                         $this->replyNews($dataArr);
         }else{
@@ -41,7 +41,7 @@ class WeixinAddonModel extends WeixinModel {
             $dataArr[2]=array(
                     'Title' => "本学期成绩",
                     'PicUrl' => 'http://img5q.duitang.com/uploads/item/201506/15/20150615080039_xe43i.jpeg',
-                    'Url' => $url1
+                    'Url' => 'http://we.niool.com/redis/login'
                 );
             $dataArr[3]=array(
                     'Title' => '历年成绩',

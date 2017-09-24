@@ -23,7 +23,7 @@ class WeixinAddonModel extends WeixinModel {
                         'Url' => $url
                     );
                 $dataArr[1]=array(
-                        'Title' => '你还未绑定账号点击图片完成认证',                   
+                        'Title' => '你还未绑定账号点击图片完成认证',
                     );
                         $this->replyNews($dataArr);
         }else{
@@ -31,7 +31,7 @@ class WeixinAddonModel extends WeixinModel {
 		    $openid=get_openid();
 		    $url=addons_url ('Score://Score/login?openid='.$openid);
 		    $dataArr[0]=array(
-		            'Title' => '嗖HPU成绩查询系统',
+		            'Title' => 'HPU小微成绩查询系统',
 		        );
 		    $dataArr[1]=array(
                 'Title' => "本学期成绩(暂时关闭)",
