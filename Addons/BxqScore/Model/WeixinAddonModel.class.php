@@ -41,7 +41,8 @@ class WeixinAddonModel extends WeixinModel {
             $dataArr[2]=array(
                     'Title' => "本学期成绩",
                     'PicUrl' => 'http://img5q.duitang.com/uploads/item/201506/15/20150615080039_xe43i.jpeg',
-                    'Url' => 'http://we.niool.com/redis/login'
+                    //'Url' => 'http://we.niool.com/redis/login'
+                    'Url' => $url1
                 );
             $dataArr[3]=array(
                     'Title' => '历年成绩',
