@@ -22,33 +22,15 @@ class KclassController extends AddonsController{
         $snoopy->referer='https://vpn.hpu.edu.cn/por/login_psw.csp';//例如：http://www.baidu.com/
 
         $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
-        $arr=array(); 
-        $arr[0][]="311408000107";
-        $arr[0][]="155506";
-        $arr[1][]="311502020328";
-        $arr[1][]="202570";
-        $arr[2][]="311505000609";
-        $arr[2][]="196443";
-        $arr[3][]="311405040126";
-        $arr[3][]="261037";
-        $arr[4][]="311413030118";
-        $arr[4][]="093815";
-        $arr[5][]="311509020427";
-        $arr[5][]="190137";
-        $arr[6][]="311410040223";
-        $arr[6][]="100624";
-        $arr[7][]="311503000512";
-        $arr[7][]="083715";
-        $arr[8][]="311402010418";
-        $arr[8][]="030019";
-        $arr[9][]="311508071030";
-        $arr[9][]="300012";
-        $arr[10][]="311503020105";
-        $arr[10][]="217724";
-        $ran=rand(0,10);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);
+        $result = end($redis->srandmember('set',1));
+        $res = explode(':',$result);
+        $uid = $res[0];
+        $pass = $res[1];
         $post['mitm_result']="";
-        $post['svpn_name']=$arr[$ran][0];
-        $post['svpn_password']=$arr[$ran][1];
+        $post['svpn_name']=$uid;
+        $post['svpn_password']=$pass;
         $post['svpn_rand_code']="";
         $url='https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305';//登陆数据提交的URL地址
         $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';

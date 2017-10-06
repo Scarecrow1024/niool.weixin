@@ -9,12 +9,12 @@ class BxqScoreController extends AddonsController{
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $cookie = trim($str[1]); //获得COOKIE（SESSIONID）
         //$arr=explode("=", $cookie);
         //print_r($arr);
@@ -25,50 +25,18 @@ class BxqScoreController extends AddonsController{
         /*
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
         */
-        $arr=array(); 
-        $arr[0][]="311408000107";$arr[0][]="155506";$arr[1][]="311502020328";$arr[1][]="202570";
-        $arr[2][]="311505000609";$arr[2][]="196443";$arr[3][]="311405040126";$arr[3][]="261037";
-        $arr[4][]="311413030118";$arr[4][]="093815";$arr[5][]="311509020427";$arr[5][]="190137";
-        $arr[6][]="311410040223";$arr[6][]="100624";$arr[7][]="311503000512";$arr[7][]="083715";
-        $arr[8][]="311402010418";$arr[8][]="030019";$arr[9][]="311508071030";$arr[9][]="300012";
-        $arr[10][]="311503020105";$arr[10][]="217724";$arr[11][]="311506001019";$arr[11][]="107016";
-        $arr[12][]="311510040206";$arr[12][]="150020";$arr[13][]="311517060112";$arr[13][]="180023";
-        $arr[14][]="311508001111";$arr[14][]="044018";$arr[15][]="311509060203";$arr[15][]="135722";
-        $arr[16][]="311409080227";$arr[16][]="312117";$arr[17][]="311508000423";$arr[17][]="03391X";
-        $arr[18][]="311509020114";$arr[18][]="257316";$arr[19][]="311406030105";$arr[19][]="132472";
-        $arr[20][]="311406000709";$arr[20][]="067383";$arr[21][]="311510020315";$arr[21][]="080620";
-        $arr[22][]="311510020316";$arr[22][]="125223";$arr[23][]="311504001504";$arr[23][]="146210";
-        $arr[24][]="311508000801";$arr[24][]="21522X";$arr[25][]="311510060218";$arr[25][]="206607";
-        $arr[26][]="311508000806";$arr[26][]="277047";$arr[27][]="311504001010";$arr[27][]="20331X";
-        $arr[28][]="311503040203";$arr[28][]="17452X";$arr[29][]="311505000822";$arr[29][]="263919";
-        $arr[30][]="311505000408";$arr[30][]="040060";$arr[31][]="311502010206";$arr[31][]="180019";
-        $arr[32][]="311405001029";$arr[32][]="120610";$arr[33][]="311405000929";$arr[33][]="082510";
-        $arr[35][]="311512010214";$arr[35][]="017921";$arr[34][]="311507000928";$arr[34][]="062417";
-        $arr[37][]="311516010109";$arr[37][]="148428";$arr[36][]="311517040220";$arr[36][]="159810";
-        $arr[39][]="311509080310";$arr[39][]="06543X";$arr[38][]="311517010213";$arr[38][]="25301X";
-        $arr[41][]="311509020428";$arr[41][]="158514";$arr[40][]="311515010107";$arr[40][]="222032";
-        $arr[43][]="311515010123";$arr[43][]="181911";$arr[42][]="311515010118";$arr[42][]="135418";
-        $arr[45][]="311506000518";$arr[45][]="120618";$arr[44][]="311506000519";$arr[44][]="055896";
-        $arr[47][]="311506000418";$arr[47][]="11313X";$arr[46][]="311506000625";$arr[46][]="209177";
-        $arr[49][]="311506000408";$arr[49][]="230020";$arr[48][]="311506000602";$arr[48][]="18202X";
-        $arr[51][]="311506000529";$arr[51][]="241519";$arr[50][]="311506000527";$arr[50][]="270050";
-        $arr[52][]="311506000409";$arr[52][]="286021";$arr[53][]="311506000613";$arr[53][]="267963";
-        $arr[54][]="311506000628";$arr[54][]="28661X";$arr[55][]="311506000324";$arr[55][]="145316";
-        $arr[56][]="311506000412";$arr[56][]="181526";$arr[57][]="311506000522";$arr[57][]="121599";
-        $arr[58][]="311506000604";$arr[58][]="266784";$arr[59][]="311506000310";$arr[59][]="282586";
-        $arr[60][]="311506000624";$arr[60][]="120610";$arr[67][]="311506000510";$arr[67][]="056522";
-        $arr[61][]="311506000514";$arr[61][]="312561";$arr[68][]="311506000627";$arr[68][]="253359";
-        $arr[62][]="311506000330";$arr[62][]="02389X";$arr[69][]="311506000618";$arr[69][]="043512";
-        $arr[63][]="311506000523";$arr[63][]="29243X";$arr[70][]="311502030329";$arr[70][]="225014";
-        $arr[64][]="311502030327";$arr[64][]="290314";$arr[71][]="311506000322";$arr[71][]="125012";
-        $arr[65][]="311507001211";$arr[65][]="064130";$arr[72][]="311506000321";$arr[72][]="29455X";
-        $ran=rand(0,72);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);
+        $result = end($redis->srandmember('set',1));
+        $res = explode(':',$result);
+        $uid = $res[0];
+        $pass = $res[1];
         //$Model = M();
         //$rand=rand(1000,9000);
         //$data=$Model->query("SELECT studentid,IdCard FROM wp_user WHERE('studentid'>'311300000000' and 'IdCard'!='') ORDER BY RAND() LIMIT 1");
         $ch=curl_init();
-        //$post="mitm_result=&svpn_name=".$data[0]['studentid']."&svpn_password=".substr($data[0]['IdCard'],12)."&svpn_rand_code=";  
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";  
+        //$post="mitm_result=&svpn_name=".$data[0]['studentid']."&svpn_password=".substr($data[0]['IdCard'],12)."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$uid."&svpn_password=".$pass."&svpn_rand_code=";
 
         /*$arr=$this->gett();
         foreach($arr as $k=>$v){
@@ -81,7 +49,7 @@ class BxqScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //带上上登陆前的cookie
         curl_setopt($ch,CURLOPT_COOKIE,$cookie);
@@ -91,7 +59,7 @@ class BxqScoreController extends AddonsController{
         //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配
         $cookie2=trim($str1[1][0]);
         $cookie3=trim($str1[1][1]);
         curl_setopt($ch, CURLOPT_COOKIE, "$cookie2;$cookie3");
@@ -103,7 +71,7 @@ class BxqScoreController extends AddonsController{
         $url="https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //curl_setopt($ch,CURLOPT_COOKIEFILE, $cookieFile);
@@ -112,10 +80,10 @@ class BxqScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配教务处登陆时设置的cookie
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $cookie4 = trim($str[1]); //获得COOKIE（SESSIONID）
         $arr4=explode("=", $cookie4);
-        //global $arr4; 
+        //global $arr4;
         //curl_setopt($ch, CURLOPT_COOKIE, $cookie4);
         //setcookie($arr4[0],$arr4[1]);
         curl_close($ch);
@@ -159,34 +127,9 @@ class BxqScoreController extends AddonsController{
 
     }
 
-    public function lala(){
-        $rand=rand(1000,10000);
-        $user=D('user');
-        $where=array(
-            'id'=>array('eq',$rand),
-            'IdCard'=>array('gt',0),
-            );
-        $list = $user->where($where)->getField('studentid,IdCard');
-        return $list;
-    }
-
-    public function gett(){
-        $ret=$this->lala();
-        if(count($ret)==1){
-            foreach($ret as $k=>$v){
-                if($k==0||$v<311300000000||$k==''){
-                    $this->gett();
-                }else{
-                    return $ret;
-                }
-            }
-        }else{
-            $this->gett();
-        }
-    }
 
     //登录页面
-    public function login(){   
+    public function login(){
         $token = 'S6Kv7GKT0JBea_sP-bA0qLMz3k0RD8b-rSix8PCaaEYtZrZE2bFHELDWuMxCIpnW3dENX_2Vs3_FtQzBXv5jGtKYF2AhGPdIDwINUzU7OLzeBUUAzRPkl2yIonQP3UavNOYhAGAUVF';
         $jsapi = file_get_contents("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=".$token."&type=jsapi");
         $jsapi = json_decode($jsapi);
@@ -229,15 +172,15 @@ class BxqScoreController extends AddonsController{
         /*$ch=curl_init();
         $openid=get_openid();
         if($openid=='-1'){
-            $img_id='default'; 
+            $img_id='default';
         }else{
             $img_id=$openid;
         }
-        $post="url=http://niool.com/weixin/Verify/".$img_id.".jpg&service=OcrKingForCaptcha&language=eng&charset=7&apiKey=7a035b90a8142c343eq9CThVaZK2nbB9kYb1LrOeCxqtH0wl7upz8Hk8pii90sXv6e1kd6qHQ9&type=http://niool.com/weixin/Verify/".$img_id.".jpg";  
+        $post="url=http://niool.com/weixin/Verify/".$img_id.".jpg&service=OcrKingForCaptcha&language=eng&charset=7&apiKey=7a035b90a8142c343eq9CThVaZK2nbB9kYb1LrOeCxqtH0wl7upz8Hk8pii90sXv6e1kd6qHQ9&type=http://niool.com/weixin/Verify/".$img_id.".jpg";
         curl_setopt($ch,CURLOPT_URL,"http://lab.ocrking.com/ok.html");
         //curl_setopt($ch,CURLOPT_REFERER,"http://lab.ocrking.com/");
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //带上上登陆前的cookie
         //curl_setopt($ch,CURLOPT_COOKIE,"$cookie_1;$cookie_2");
@@ -253,18 +196,18 @@ class BxqScoreController extends AddonsController{
         $params = array (
             'zjh' => $zjh,
             'mm' => $mm,
-            'v_yzm' => $v_yzm 
-            );  
+            'v_yzm' => $v_yzm
+            );
 
 
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4");
-        //curl_setopt($ch,CURLOPT_COOKIE,$cookie1); 
+        //curl_setopt($ch,CURLOPT_COOKIE,$cookie1);
         //curl_setopt($ch,CURLOPT_COOKIE,$cookie2);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$params);
@@ -278,7 +221,7 @@ class BxqScoreController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/bxqcjcxAction.do");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do");
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4");
         //curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
@@ -303,7 +246,7 @@ class BxqScoreController extends AddonsController{
                 $data['pjf'][]=$v[8];
                 $data['cj'][]=$v[9];
                 $data['mc'][]=$v[10];
-            } 
+            }
         }
         $con=count($data['kcm']);
         //print_r($arr)."<br>";
@@ -315,10 +258,10 @@ class BxqScoreController extends AddonsController{
         $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4"); 
+        curl_setopt($ch,CURLOPT_COOKIE,"$cookie2;$cookie3;$cookie4");
         setcookie("isl","0");
         setcookie("TWFID","deleted");
         setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");

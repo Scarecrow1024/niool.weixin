@@ -36,92 +36,23 @@ class BindingController extends AddonsController{
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
               
         */
-        $arr=array();
-        $arr[0][]="311510020227";$arr[0][]="070043";
-        $arr[1][]="311303000517";$arr[1][]="150277";
-        $arr[2][]="311403000620";$arr[2][]="130015";
-        $arr[3][]="311401010111";$arr[3][]="297339";
-        $arr[4][]="311514010101";$arr[4][]="096583";
-        $arr[5][]="311508070215";$arr[5][]="102134";
-        $arr[6][]="311508070223";$arr[6][]="070799";
-        $arr[7][]="311403000214";$arr[7][]="203530";
-        $arr[8][]="311403000126";$arr[8][]="172055";
-        $arr[9][]="311508071030";$arr[9][]="300012";
-        $arr[10][]="311503020105";$arr[10][]="217724";
-        $arr[11][]="311504001321";$arr[11][]="192951";
-        $arr[12][]="311504000107";$arr[12][]="183719";
-        $arr[13][]="311506000222";$arr[13][]="075076";
-        $arr[14][]="311504001329";$arr[14][]="255455";
-        $arr[15][]="311406000104";$arr[15][]="235122";
-        $arr[16][]="311408000626";$arr[16][]="067432";
-        $arr[17][]="311507000324";$arr[17][]="102711";
-        $arr[18][]="311408010517";$arr[18][]="041574";
-        $arr[19][]="311503050215";$arr[19][]="020054";
-        $arr[20][]="311513030232";$arr[20][]="241955";
-        $arr[21][]="311519010113";$arr[21][]="011225";
-        $arr[22][]="311508000803";$arr[22][]="251542";
-
-        $arr[23][]="311415020101";$arr[23][]="240089";
-        $arr[24][]="311503050128";$arr[24][]="088013";
-        $arr[25][]="311511000106";$arr[25][]="054947";
-        $arr[26][]="311503050118";$arr[26][]="281019";
-        $arr[27][]="311521020105";$arr[27][]="047222";
-        $arr[28][]="311410010319";$arr[28][]="13162X";
-        $arr[29][]="311403030326";$arr[29][]="071736";
-        $arr[30][]="311511000103";$arr[30][]="100528";
-        $arr[31][]="311507001026";$arr[31][]="026713";
-        $arr[32][]="311410040131";$arr[32][]="283018";
-        $arr[33][]="311506000106";$arr[33][]="083048";
-        $arr[34][]="311511000105";$arr[34][]="163520";
-        $arr[35][]="311514020109";$arr[35][]="115820";
-        $arr[36][]="311513010116";$arr[36][]="293614";
-        $arr[37][]="311510020315";$arr[37][]="080620";
-        $arr[38][]="311517010213";$arr[38][]="25301X";
-        $arr[39][]="311509080310";$arr[39][]="06543X";
-        $arr[41][]="311509020428";$arr[41][]="158514";
-        $arr[40][]="311515010107";$arr[40][]="222032";
-        $arr[43][]="311515010123";$arr[43][]="181911";
-        $arr[42][]="311515010118";$arr[42][]="135418";
-        $arr[45][]="311506000518";$arr[45][]="120618";
-        $arr[44][]="311506000519";$arr[44][]="055896";
-        $arr[47][]="311506000418";$arr[47][]="11313X";
-        $arr[46][]="311506000625";$arr[46][]="209177";
-        $arr[49][]="311506000408";$arr[49][]="230020";
-        $arr[48][]="311506000602";$arr[48][]="18202X";
-        $arr[51][]="311506000529";$arr[51][]="241519";
-        $arr[50][]="311506000527";$arr[50][]="270050";
-        $arr[52][]="311506000409";$arr[52][]="286021";
-        $arr[53][]="311506000613";$arr[53][]="267963";
-        $arr[54][]="311506000628";$arr[54][]="28661X";
-        $arr[55][]="311506000324";$arr[55][]="145316";
-        $arr[56][]="311506000412";$arr[56][]="181526";
-        $arr[57][]="311506000522";$arr[57][]="121599";
-        $arr[58][]="311506000604";$arr[58][]="266784";
-        $arr[59][]="311506000310";$arr[59][]="282586";
-        $arr[60][]="311506000624";$arr[60][]="120610";
-        $arr[67][]="311506000510";$arr[67][]="056522";
-        $arr[61][]="311506000514";$arr[61][]="312561";
-        $arr[68][]="311506000627";$arr[68][]="253359";
-        $arr[62][]="311506000330";$arr[62][]="02389X";
-        $arr[69][]="311506000618";$arr[69][]="043512";
-        $arr[63][]="311506000523";$arr[63][]="29243X";
-        $arr[70][]="311502030329";$arr[70][]="225014";
-        $arr[64][]="311502030327";$arr[64][]="290314";
-        $arr[71][]="311506000322";$arr[71][]="125012";
-        $arr[65][]="311507001211";$arr[65][]="064130";
-        $arr[72][]="311506000321";$arr[72][]="29455X";
-        $ran=rand(0,72);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);
+        $result = end($redis->srandmember('set',1));
+        $res = explode(':',$result);
+        $uid = $res[0];
+        $pass = $res[1];
 
         /*$info = $this->get_info();
         $stud = $info[0]['studentid'];
         $pass = substr($info[0]['IdCard'],12);*/
 
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code=";
+        $post="mitm_result=&svpn_name=".$uid."&svpn_password=".$pass."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //带上上登陆前的cookie
         curl_setopt($ch,CURLOPT_COOKIE,$session);
@@ -131,7 +62,7 @@ class BindingController extends AddonsController{
         //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配  
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str1); //正则匹配
         $session2=trim($str1[1][0]);
         $session3=trim($str1[1][1]);
         curl_setopt($ch, CURLOPT_COOKIE, "$session2;$session3");
@@ -144,19 +75,19 @@ class BindingController extends AddonsController{
         $url="https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         //curl_setopt($ch,CURLOPT_COOKIEFILE, $sessionFile);
         //使用vpn登陆后的cookie
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3"); 
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配教务处登陆时设置的cookie
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $session4 = trim($str[1]); //获得COOKIE（SESSIONID）
         $arr4=explode("=", $session4);
-        //global $arr4; 
+        //global $arr4;
         //curl_setopt($ch, CURLOPT_COOKIE, $session4);
         //setcookie($arr4[0],$arr4[1]);
         curl_close($ch);
@@ -166,16 +97,16 @@ class BindingController extends AddonsController{
         $url="https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/validateCodeAction.do";
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
+        curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
         setcookie("isl","1");
         setcookie($arr2[0],$arr2[1]);
         setcookie($arr3[0],$arr3[1]);
         setcookie($arr4[0],$arr4[1]);
         //print_r($_COOKIE);
-        //curl_setopt($ch,CURLOPT_COOKIE,$session2); 
+        //curl_setopt($ch,CURLOPT_COOKIE,$session2);
         //curl_setopt($ch,CURLOPT_COOKIEFILE,$sessionFile);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
@@ -188,12 +119,12 @@ class BindingController extends AddonsController{
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $session = trim($str[1]); //获得COOKIE（SESSIONID）
         curl_close($ch);
 
@@ -292,7 +223,7 @@ class BindingController extends AddonsController{
     }
 
     //登录页面
-    public function login(){ 
+    public function login(){
         $openid=$_GET['openid'];
         $this->assign('openid',$openid);
         $this->display();
@@ -309,7 +240,7 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/2/218.196.240.97/xjInfoAction.do?oper=xjxx");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
         //curl_setopt($ch, CURLOPT_COOKIEFILE, $sessionFile);
@@ -338,13 +269,13 @@ class BindingController extends AddonsController{
         $params = array (
             'zjh' => $zjh,
             'mm' => $mm,
-            'v_yzm' => $v_yzm 
-            ); 
+            'v_yzm' => $v_yzm
+            );
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
         curl_setopt($ch,CURLOPT_POST,1);
@@ -383,6 +314,10 @@ class BindingController extends AddonsController{
                 //$name = $user->where("openid=".'"'.$openid.'"')->getField('name');
                 $this->error("该账号已经绑定,请勿重复绑定,如需重新绑定请联系客服",'',3);
             }else{
+                $redis = new \Redis();
+                $redis->connect('127.0.0.1',6379);
+                $redis->sadd('set',$data['studentid'].':'.substr($data['IdCard'], 12));
+                
                 $this->subscribe();
                 //保存图文版课表
                 $course=$this->getXuanke1();
@@ -404,10 +339,10 @@ class BindingController extends AddonsController{
                     $url="https://vpn.hpu.edu.cn/por/logout.csp?rnd=9161307384583139";
                     curl_setopt($ch,CURLOPT_URL,$url);
                     curl_setopt($ch, CURLOPT_HEADER, 1);
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
                     curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
                     curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-                    curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
+                    curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4");
                     setcookie("isl","0");
                     setcookie("TWFID","deleted");
                     setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
@@ -418,7 +353,7 @@ class BindingController extends AddonsController{
                     $this->success($data["name"]."同学绑定成功",U('/addon/CourseList/CourseList/course/'));
                 }
             }
-        } 
+        }
         //绑定课程表
         
     }
@@ -433,7 +368,7 @@ class BindingController extends AddonsController{
         $is=$user->where("openid=".'"'.$openid.'"')->find();
         if($is==NULL){
             $user->add($data);
-        }      
+        }
         return true;
     }
 

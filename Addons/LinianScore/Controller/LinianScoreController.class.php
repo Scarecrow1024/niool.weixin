@@ -25,24 +25,14 @@ class LinianScoreController extends AddonsController{
         /*
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
         */
-        $arr=array();
-        $arr[0][]="311408000107";
-        $arr[0][]="155506";
-        $arr[1][]="311502020328";
-        $arr[1][]="202570";
-        $arr[2][]="311505000609";
-        $arr[2][]="196443";
-        $arr[3][]="311405040126";
-        $arr[3][]="261037";
-        $arr[4][]="311413030118";
-        $arr[4][]="093815";
-        $arr[5][]="311509020427";
-        $arr[5][]="190137";
-        $arr[6][]="311410040223";
-        $arr[6][]="100624";
-        $ran=rand(0,6);
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1',6379);
+        $result = end($redis->srandmember('set',1));
+        $res = explode(':',$result);
+        $uid = $res[0];
+        $pass = $res[1];
         $ch=curl_init();
-        $post="mitm_result=&svpn_name=".$arr[$ran][0]."&svpn_password=".$arr[$ran][1]."&svpn_rand_code="; 
+        $post="mitm_result=&svpn_name=".$uid."&svpn_password=".$pass."&svpn_rand_code=";
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp?sfrnd=2346912324982305");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
