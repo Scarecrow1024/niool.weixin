@@ -59,7 +59,7 @@ class KclassController extends AddonsController{
     }
 
     //登录页面
-    public function login(){    
+    public function login(){
         $rs=curl_init();
         /*$user=M('user');
         $openid=get_openid();
