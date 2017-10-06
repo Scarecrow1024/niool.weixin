@@ -197,7 +197,7 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$session2;$session3;$session4"); 
         setcookie("TWFID","deleted");
-        setcookie("expires","Saturday, 16-Jan-16 13:41:29 GMT");
+        setcookie("expires","Saturday, 17-Jan-17 13:41:29 GMT");
         setcookie("path","/");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $logout=curl_exec($ch);
@@ -317,7 +317,7 @@ class BindingController extends AddonsController{
                 $redis = new \Redis();
                 $redis->connect('127.0.0.1',6379);
                 $redis->sadd('set',$data['studentid'].':'.substr($data['IdCard'], 12));
-                
+
                 $this->subscribe();
                 //保存图文版课表
                 $course=$this->getXuanke1();
