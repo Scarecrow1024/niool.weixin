@@ -6,7 +6,8 @@ use Home\Controller\AddonsController;
 class BindingController extends AddonsController{
     public function rinit(){
         $redis = new \Redis();
-        $res = $redis->sadd('pset','311309010130');
+        $redis->connect('127.0.0.1',6379);
+        $res = $redis->sadd('set',['311605000502:249645','311502020328:202570']);
         var_dump($res);
     }
 
@@ -16,7 +17,7 @@ class BindingController extends AddonsController{
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
