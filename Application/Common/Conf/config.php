@@ -46,6 +46,9 @@ return array(
     'DB_PORT'   => '3306', // 端口
     'DB_PREFIX' => 'wp_', // 数据库表前缀
 
+    'REDIS_HOST' => '127.0.0.1',
+    'REDIS_PORT' => 6379,
+
     /* 文档模型配置 (文档模型核心配置，请勿更改) */
     'DOCUMENT_MODEL_TYPE' => array(2 => '主题', 1 => '目录', 3 => '段落'),
 );

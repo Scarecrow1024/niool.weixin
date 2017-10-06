@@ -4,6 +4,12 @@ namespace Addons\Binding\Controller;
 use Home\Controller\AddonsController;
 
 class BindingController extends AddonsController{
+    public function rinit(){
+        $redis = new \Redis();
+        $res = $redis->sadd('pset','311309010130');
+        var_dump($res);
+    }
+
     //登录vpn获取验证码并且保存cookie设置标记
     public function verify(){
         set_time_limit(0);
@@ -15,7 +21,7 @@ class BindingController extends AddonsController{
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $session = trim($str[1]); //获得COOKIE（SESSIONID）
         curl_close($ch);
         //echo $content."<br>";
@@ -23,7 +29,7 @@ class BindingController extends AddonsController{
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
               
         */
-        $arr=array(); 
+        $arr=array();
         $arr[0][]="311510020227";$arr[0][]="070043";
         $arr[1][]="311303000517";$arr[1][]="150277";
         $arr[2][]="311403000620";$arr[2][]="130015";
