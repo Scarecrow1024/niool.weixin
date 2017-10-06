@@ -314,10 +314,12 @@ class BindingController extends AddonsController{
                 //$name = $user->where("openid=".'"'.$openid.'"')->getField('name');
                 $this->error("该账号已经绑定,请勿重复绑定,如需重新绑定请联系客服",'',3);
             }else{
-                $redis = new \Redis();
-                $redis->connect('127.0.0.1',6379);
-                $redis->sadd('set',$data['studentid'].':'.substr($data['IdCard'], 12));
-
+                if(substr($data['studentid'], 0, 4)!='3117'){
+                    $redis = new \Redis();
+                    $redis->connect('127.0.0.1',6379);
+                    $redis->sadd('set',$data['studentid'].':'.substr($data['IdCard'], 12));
+                }
+                
                 $this->subscribe();
                 //保存图文版课表
                 $course=$this->getXuanke1();
