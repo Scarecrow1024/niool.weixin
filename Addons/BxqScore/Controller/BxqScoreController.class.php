@@ -9,6 +9,7 @@ class BxqScoreController extends AddonsController{
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/por/login_psw.csp");
         curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($rs,CURLOPT_REFERER,"http://vpn.hpu.edu.cn/");
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0; InfoPath.3)");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
