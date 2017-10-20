@@ -6,14 +6,14 @@ use Home\Controller\AddonsController;
 class KclassController extends AddonsController{
     //登录vpn获取验证码并且保存cookie设置标记
     public function verify(){
-        set_time_limit(0);   
+        set_time_limit(0);
         //获取TWFID的cookie值
         $snoopy = new SnoopyController();
         $snoopy->cookies["ENABLE_RANDCODE"] = ' 0';
         $snoopy->fetch('https://vpn.hpu.edu.cn/por/login_psw.csp'); //获取所有内容
 
         $cookies1=$snoopy->headers;
-        preg_match('/Set-Cookie:(.*);/iU',$cookies1[4],$cookies1); //正则匹配  
+        preg_match('/Set-Cookie:(.*);/iU',$cookies1[4],$cookies1); //正则匹配
         //print_r($cookies1);
         $arr1=explode('=', $cookies1[1]);
         $cookie1=$arr1[1];

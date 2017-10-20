@@ -103,7 +103,7 @@ class BxqScoreController extends AddonsController{
         setcookie($arr3[0],$arr3[1]);
         setcookie($arr4[0],$arr4[1]);
         //print_r($_COOKIE);
-        //curl_setopt($ch,CURLOPT_COOKIE,$cookie2); 
+        //curl_setopt($ch,CURLOPT_COOKIE,$cookie2);
         //curl_setopt($ch,CURLOPT_COOKIEFILE,$cookieFile);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
@@ -113,7 +113,7 @@ class BxqScoreController extends AddonsController{
         /*$xmlstr=$content;
         $openid=get_openid();
         if($openid=='-1'){
-            $img_id='default'; 
+            $img_id='default';
         }else{
             $img_id=$openid;
         }
@@ -273,28 +273,28 @@ class BxqScoreController extends AddonsController{
     }
 
     //正则匹配表格
-    public function get_td_array($table) { 
-        $table = preg_replace("'<table[^>]*?>'si","",$table); 
-        $table = preg_replace("'<tr[^>]*?>'si","",$table); 
-        $table = preg_replace("'<td[^>]*?>'si","",$table); 
-        $table = str_replace("</tr>","{tr}",$table); 
+    public function get_td_array($table) {
+        $table = preg_replace("'<table[^>]*?>'si","",$table);
+        $table = preg_replace("'<tr[^>]*?>'si","",$table);
+        $table = preg_replace("'<td[^>]*?>'si","",$table);
+        $table = str_replace("</tr>","{tr}",$table);
         //PHP开源代码
-        $table = str_replace("</td>","{td}",$table); 
-        //去掉 HTML 标记  
-        $table = preg_replace("'<[/!]*?[^<>]*?>'si","",$table); 
-        //去掉空白字符   
-        $table = preg_replace("'([rn])[s]+'","",$table); 
-        $table = str_replace(" ","",$table); 
-        $table = str_replace("&nbsp;","",$table); 
+        $table = str_replace("</td>","{td}",$table);
+        //去掉 HTML 标记
+        $table = preg_replace("'<[/!]*?[^<>]*?>'si","",$table);
+        //去掉空白字符
+        $table = preg_replace("'([rn])[s]+'","",$table);
         $table = str_replace(" ","",$table);
-        $table = explode('{tr}', $table); 
-        array_pop($table);  
-        foreach ($table as $key=>$tr) { 
-            $td = explode('{td}', $tr); 
-            array_pop($td); 
-            $td_array[] = $td; 
-        } 
-        return $td_array; 
+        $table = str_replace("&nbsp;","",$table);
+        $table = str_replace(" ","",$table);
+        $table = explode('{tr}', $table);
+        array_pop($table);
+        foreach ($table as $key=>$tr) {
+            $td = explode('{td}', $tr);
+            array_pop($td);
+            $td_array[] = $td;
+        }
+        return $td_array;
     }
 
     public function share(){
