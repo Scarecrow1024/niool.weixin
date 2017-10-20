@@ -125,20 +125,19 @@ class RepairController extends AddonsController{
 
     public function update(){
         $openid=$_POST['openid'];
-        $openid = 'oikLjwAbTRfHrBqqjN_aSi2pYhS4';
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 12, 6);
-        // if(isset($_POST['submit'])){
-        //     if(strlen($_POST['phone'])<11){
-        //         $this->error('手机号长度不对');
-        //     }else if(strlen($_POST['nickname'])==""){
-        //         $this->error('昵称不能为空');
-        //     }else if(strlen($_POST['address'])==""){
-        //         $this->error('地址不能为空');
-        //     }
-        // }
+        if(isset($_POST['submit'])){
+            if(strlen($_POST['phone'])<11){
+                $this->error('手机号长度不对');
+            }else if(strlen($_POST['nickname'])==""){
+                $this->error('昵称不能为空');
+            }else if(strlen($_POST['address'])==""){
+                $this->error('地址不能为空');
+            }
+        }
         $log_url="http://houqin.hpu.edu.cn/pc/Account/Login";
         $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Fhouqin.hpu.edu.cn%2Fpc%2F&LoginType=";
         $ch=curl_init();
@@ -151,19 +150,12 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
-        echo $mm;
-        echo $content;
-        die;
+
         //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $cookie1=$str[1][0];
         $cookie2=$str[1][1];
         curl_close($ch);
-
-        $_POST['nickname'] = '123';
-        $_POST['phone'] = '17673738282';
-        $_POST['address'] = '松三999';
-        $studentid = '33344323222';
 
         $post="Nickname=".$_POST['nickname']."&Mobile=".$_POST['phone']."&Address=".$_POST['address']."&MID=".$studentid;
         $url = "http://houqin.hpu.edu.cn/rsp/my/info";
@@ -171,7 +163,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/my/info");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$post);
