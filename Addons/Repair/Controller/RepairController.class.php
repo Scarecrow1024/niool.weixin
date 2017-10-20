@@ -4,7 +4,8 @@ use Home\Controller\AddonsController;
 
 class RepairController extends AddonsController{
     public function index(){
-        $openid=$_GET['openid'];
+        //$openid = $_GET['openid'];
+        $openid = get_openid();
         //先登陆
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
@@ -18,12 +19,12 @@ class RepairController extends AddonsController{
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$log_post);
         curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/pc/Account/Login");
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         //正则匹配cookie并使用
-        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配  
+        preg_match_all('/Set-Cookie:(.*);/iU',$content,$str); //正则匹配
         $cookie1=$str[1][0];
         $cookie2=$str[1][1];
         curl_close($ch);
@@ -33,7 +34,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_URL,"http://houqin.hpu.edu.cn/rsp/my/info");
         curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/my/repaired");
         curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_COOKIE,"$cookie1;$cookie2");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
