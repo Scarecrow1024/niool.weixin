@@ -151,6 +151,7 @@ class RepairController extends AddonsController{
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
+        echo $mm;
         echo $content;
         die;
         //正则匹配cookie并使用
