@@ -5,14 +5,14 @@ use Home\Controller\AddonsController;
 
 class UbindController extends AddonsController{
     //登录页面
-    public function index(){  
+    public function index(){
         //$opeind=$_GET['openid'];
         $this->assign('openid',get_openid());
         $this->display();
     }
 
     //登录页面
-    public function unbind(){ 
+    public function unbind(){
         if(isset($_POST['sure'])){
             $user=M('user');
             $openid=$_POST['openid'];
@@ -37,7 +37,7 @@ class UbindController extends AddonsController{
         $is=$user->where("openid=".'"'.$openid.'"')->find();
         if($is==NULL){
             $user->add($data);
-        }      
+        }
         return true;
     }
 }
