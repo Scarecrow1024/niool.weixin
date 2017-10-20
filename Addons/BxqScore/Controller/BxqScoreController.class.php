@@ -27,7 +27,7 @@ class BxqScoreController extends AddonsController{
             登陆并设置新的TWFID和ENABLE_RANDCODE获取重定向地址
         */
         $redis = new \Redis();
-        $redis->connect('127.0.0.1',6379);
+        $redis->connect('127.0.0.1',8888);
         $result = end($redis->srandmember('set',1));
         $res = explode(':',$result);
         $uid = $res[0];

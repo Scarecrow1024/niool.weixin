@@ -23,7 +23,7 @@ class KclassController extends AddonsController{
 
         $snoopy->agent="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; WOW64; Trident/7.0; Touch; .NET4.0C; .NET4.0E; Tablet PC 2.0)";
         $redis = new \Redis();
-        $redis->connect('127.0.0.1',6379);
+        $redis->connect('127.0.0.1',8888);
         $result = end($redis->srandmember('set',1));
         $res = explode(':',$result);
         $uid = $res[0];
