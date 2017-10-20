@@ -4,8 +4,8 @@ use Home\Controller\AddonsController;
 
 class RepairController extends AddonsController{
     public function index(){
-        //$openid = $_GET['openid'];
-        $openid = get_openid();
+        $openid = $_GET['openid'];
+        //$openid = get_openid();
         //先登陆
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
