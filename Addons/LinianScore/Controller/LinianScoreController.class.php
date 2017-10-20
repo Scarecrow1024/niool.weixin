@@ -166,8 +166,8 @@ class LinianScoreController extends AddonsController{
         $params = array (
             'zjh' => $zjh,
             'mm' => $mm,
-            'v_yzm' => $v_yzm 
-            );  
+            'v_yzm' => $v_yzm
+            );
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,"https://vpn.hpu.edu.cn/web/1/http/1/218.196.240.97/loginAction.do");
         curl_setopt($ch,CURLOPT_REFERER,"https://vpn.hpu.edu.cn/web/1/http/0/218.196.240.97/");
