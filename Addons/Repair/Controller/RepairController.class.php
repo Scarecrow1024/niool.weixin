@@ -9,7 +9,7 @@ class RepairController extends AddonsController{
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
-        $mm = substr($IdCard, 11, 6);
+        $mm = substr($IdCard, 12, 6);
         $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
         $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Frepair.hpu.edu.cn%2Fpc%2F&LoginType=";
         $ch=curl_init();
@@ -129,7 +129,7 @@ class RepairController extends AddonsController{
         $user=M('user');
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
-        $mm = substr($IdCard, 11, 6);
+        $mm = substr($IdCard, 12, 6);
         // if(isset($_POST['submit'])){
         //     if(strlen($_POST['phone'])<11){
         //         $this->error('手机号长度不对');
