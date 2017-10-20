@@ -28,28 +28,28 @@ class RepairController extends AddonsController{
         $cookie2=$str[1][1];
         curl_close($ch);
 
-        //判断是否填写个人资料
-        $ch=curl_init();
-        curl_setopt($ch,CURLOPT_URL,"http://repair.hpu.edu.cn/rsp/my/info");
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/my/repaired");
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
-        curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
-        curl_setopt($ch,CURLOPT_COOKIE,"$cookie1;$cookie2");
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        $content = curl_exec ( $ch );
-        curl_close ( $ch );
-        //echo $content;
-        preg_match_all('|value="(.*)"|isU',$content,$data);
-        $phone=$data[1][5];
-        //print_r($data);
-        if((($data[1][5]=='')||($data[1][6]==''))){
-            $this->error("等待跳转完善个人信息后再来报修",addons_url ("Repair://Repair/grzx/openid/".$openid),1);
-        }else{
+        // //判断是否填写个人资料
+        // $ch=curl_init();
+        // curl_setopt($ch,CURLOPT_URL,"http://repair.hpu.edu.cn/rsp/my/info");
+        // curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/my/repaired");
+        // curl_setopt($ch, CURLOPT_HEADER, 1);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+        // curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
+        // curl_setopt($ch,CURLOPT_COOKIE,"$cookie1;$cookie2");
+        // curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        // $content = curl_exec ( $ch );
+        // curl_close ( $ch );
+        // //echo $content;
+        // preg_match_all('|value="(.*)"|isU',$content,$data);
+        // $phone=$data[1][5];
+        // //print_r($data);
+        // if((($data[1][5]=='')||($data[1][6]==''))){
+        //     $this->error("等待跳转完善个人信息后再来报修",addons_url ("Repair://Repair/grzx/openid/".$openid),1);
+        // }else{
             $this->assign('phone',$phone);
             $this->assign('openid',$openid);
             $this->display();
-        }
+        //}
     
     }
 
