@@ -10,14 +10,14 @@ class RepairController extends AddonsController{
         $studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 12, 6);
-        $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
-        $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Frepair.hpu.edu.cn%2Fpc%2F&LoginType=";
+        $log_url="http://houqin.hpu.edu.cn/pc/Account/Login";
+        $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Fhouqin.hpu.edu.cn%2Fpc%2F&LoginType=";
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$log_url);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$log_post);
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/pc/Account/login");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/pc/Account/Login");
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -30,8 +30,8 @@ class RepairController extends AddonsController{
 
         //判断是否填写个人资料
         $ch=curl_init();
-        curl_setopt($ch,CURLOPT_URL,"http://repair.hpu.edu.cn/rsp/my/info");
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/my/repaired");
+        curl_setopt($ch,CURLOPT_URL,"http://houqin.hpu.edu.cn/rsp/my/info");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/my/repaired");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -139,14 +139,14 @@ class RepairController extends AddonsController{
         //         $this->error('地址不能为空');
         //     }
         // }
-        $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
-        $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Frepair.hpu.edu.cn%2Fpc%2F&LoginType=";
+        $log_url="http://houqin.hpu.edu.cn/pc/Account/Login";
+        $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Fhouqin.hpu.edu.cn%2Fpc%2F&LoginType=";
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$log_url);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$log_post);
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/pc/Account/login");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/pc/Account/login");
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -166,10 +166,10 @@ class RepairController extends AddonsController{
         $studentid = '33344323222';
 
         $post="Nickname=".$_POST['nickname']."&Mobile=".$_POST['phone']."&Address=".$_POST['address']."&MID=".$studentid;
-        $url = "http://repair.hpu.edu.cn/rsp/my/info";
+        $url = "http://houqin.hpu.edu.cn/rsp/my/info";
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/my/info");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/my/info");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -191,14 +191,14 @@ class RepairController extends AddonsController{
         //$name = 'HPU小微';
         $IdCard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
         $mm = substr($IdCard, 11, 6);
-        $log_url="http://repair.hpu.edu.cn/pc/Account/Login";
+        $log_url="http://houqin.hpu.edu.cn/pc/Account/Login";
         $log_post="UserName=".$studentid."&Password=".$mm."&ReturnUrl=http%3A%2F%2Frepair.hpu.edu.cn%2Fpc%2F&LoginType=";
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$log_url);
         curl_setopt($ch,CURLOPT_POST,1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch,CURLOPT_POSTFIELDS,$log_post);
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/pc/Account/login");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/pc/Account/login");
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -212,8 +212,8 @@ class RepairController extends AddonsController{
 
         //获取pwdstr
         $ch=curl_init();
-        curl_setopt($ch,CURLOPT_URL,"http://repair.hpu.edu.cn/rsp/my/wantrepair");
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/site/index");
+        curl_setopt($ch,CURLOPT_URL,"http://houqin.hpu.edu.cn/rsp/my/wantrepair");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/site/index");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -235,10 +235,10 @@ class RepairController extends AddonsController{
         $BuserName=$_POST['BuserName'];
         $Bsource=$_POST['Bsource'];
         $post="Area_Serial=".$Area_Serial."&Area_Name=".$Area_Name."&Baddress=".$Baddress."&Project_Name=".$Project_Name."&Project_Serial=".$Project_Serial."&Bcontent=".$Bcontent."&Mobile=".$Mobile."&BuserName=".$name."&InfoID=&pwdstr=".$pwdstr."&imglist=&Bsource=".$Bsource;
-        $url = "http://repair.hpu.edu.cn/rsp/my/wantrepair";
+        $url = "http://houqin.hpu.edu.cn/rsp/my/wantrepair";
         $ch = curl_init ();
         curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_REFERER,"http://repair.hpu.edu.cn/rsp/my/wantrepair");
+        curl_setopt($ch,CURLOPT_REFERER,"http://houqin.hpu.edu.cn/rsp/my/wantrepair");
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
         curl_setopt($ch,CURLOPT_USERAGENT , "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0");
