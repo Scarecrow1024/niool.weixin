@@ -6,6 +6,7 @@ use Home\Controller\AddonsController;
 class KclassController extends AddonsController{
     //登录vpn获取验证码并且保存cookie设置标记
     public function verify(){
+        return $this->getVerify();
         set_time_limit(0);
         //获取TWFID的cookie值
         $snoopy = new SnoopyController();
@@ -61,34 +62,12 @@ class KclassController extends AddonsController{
     //登录页面
     public function login(){
         $rs=curl_init();
-        /*$user=M('user');
-        $openid=get_openid();
-        //$studentid = $user->where("openid=".'"'.$openid.'"')->getField('studentid');
-        $data = $user->where("openid=".'"'.$openid.'"')->find();
-        //$idcard = $user->where("openid=".'"'.$openid.'"')->getField('IdCard');
-        $idcard=$data['IdCard'];
-        $studentid=$data['studentid'];
-        $idcard=substr($idcard, 11, 6);*/
-        //post提交
-        $url="http://my.hpu.edu.cn/userPasswordValidate.portal";
-        $post="Login.Token1=311309010130&Login.Token2=024361&goto=http%3A%2F%2Fmy.hpu.edu.cn%2FloginSuccess.portal&gotoOnFail=http%3A%2F%2Fmy.hpu.edu.cn%2FloginFailure.portal"; 
-        curl_setopt($rs,CURLOPT_URL,$url);
-        //post数据来源
-        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/login.portal");
-        curl_setopt($rs,CURLOPT_POST,1);
-        curl_setopt($rs,CURLOPT_POSTFIELDS,$post);  
-        curl_setopt($rs,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($rs,CURLOPT_FOLLOWLOCATION,1);
-        //跳转到数据页面
-        curl_exec($rs);
         curl_setopt($rs,CURLOPT_URL,"http://my.hpu.edu.cn/viewschoolcalendar3.jsp");
-        curl_setopt($rs,CURLOPT_REFERER,"http://my.hpu.edu.cn/index.portal");
         curl_setopt($rs,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($rs);
         curl_close($rs);
         $content=strip_tags($content)."<br>";
         preg_match_all("/[0-9]+/", $content, $matches);
-        //print_r($matches);
         $zhou=$matches[0][7];
         $day=date('w');
         $this->assign('day',$day);
